@@ -4,7 +4,6 @@ import { i18n, type Locale } from './i18n-config'
 const dictionaries = {
   zh: async () => import('./dictionaries/zh.json'),
   en: async () => import('./dictionaries/en.json'),
-  ja: async () => import('./dictionaries/ja.json'),
 }
 
 export const getDictionary = async (locale: Locale) => {

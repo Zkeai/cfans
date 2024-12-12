@@ -3,7 +3,6 @@ import { i18n, Locale } from "@/i18n-config"
 import { usePathname } from "next/navigation"
 import ZH_CONFIG from '../dictionaries/zh.json'
 import EN_CONFIG from '../dictionaries/en.json'
-import JA_CONFIG from '../dictionaries/ja.json'
 
 export const useLocale = () => {
   const pathName = usePathname()
@@ -23,7 +22,6 @@ export const useDictionary = () => {
     const dict_map = {
       'zh': ZH_CONFIG,
       'en': EN_CONFIG,
-      'ja': JA_CONFIG,
     }
     const dict = dict_map[locale] as Record<string, string>
     return createDictionaryFunction(dict);
