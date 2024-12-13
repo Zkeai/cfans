@@ -1,19 +1,50 @@
+// components/ClientHeader.tsx
 "use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Layout, Nav, Button } from "@douyinfe/semi-ui";
-import { IconSemiLogo, IconBell, IconHelpCircle } from "@douyinfe/semi-icons";
+import {
+  IconSemiLogo,
+  IconBell,
+  IconHelpCircle,
+  IconMoon,
+  IconSun,
+} from "@douyinfe/semi-icons";
+import LocaleSwitcher from "../../components/locale-switcher";
 
-const ClientHeader = () => {
+const ClientHeader = ({
+  loginButton,
+  shop,
+  order,
+  doc,
+  local,
+}: {
+  loginButton: string;
+  shop: string;
+  order: string;
+  doc: string;
+  local: string;
+}) => {
   const router = useRouter();
   const { Header } = Layout;
+  const [isMoon, setIsMoon] = useState(true);
+
+  const toggleIcon = () => {
+    const body = document.body;
+    if (body.hasAttribute("theme-mode")) {
+      body.removeAttribute("theme-mode");
+    } else {
+      body.setAttribute("theme-mode", "dark");
+    }
+    setIsMoon(!isMoon);
+  };
 
   // 导航项配置
   const navItems = [
-    { key: "index", label: "商店首页", path: "/" },
-    { key: "search", label: "查询订单", path: "/search" },
-    { key: "doc", label: "使用教程", path: "/doc" },
+    { key: "shop", label: shop, path: `/${local}/` },
+    { key: "order", label: order, path: `/${local}/order` },
+    { key: "doc", label: doc, path: `/${local}/doc` },
   ];
 
   // 选中状态
@@ -23,6 +54,11 @@ const ClientHeader = () => {
   const handleClick = (key: string, path: string) => {
     setSelectedKey(key); // 更新选中状态
     router.push(path); // 跳转页面
+  };
+
+  //跳转登陆页面
+  const loginHandle = () => {
+    router.push("login");
   };
 
   return (
@@ -87,14 +123,23 @@ const ClientHeader = () => {
         >
           <Button
             theme="borderless"
-            icon={<IconBell size="large" />}
+            icon={isMoon ? <IconMoon size="large" /> : <IconSun size="large" />}
             style={{ color: "var(--semi-color-text-2)" }}
+            onClick={toggleIcon}
           />
+          {/* 集成语言切换器 */}
+          <LocaleSwitcher />
           <Button
             theme="borderless"
-            icon={<IconHelpCircle size="large" />}
-            style={{ color: "var(--semi-color-text-2)" }}
-          />
+            style={{
+              color: "var(--semi-color-bg-4)",
+              backgroundColor: "rgba(var(--semi-grey-9), 1)",
+              marginRight: "2rem",
+            }}
+            onClick={() => loginHandle()}
+          >
+            {loginButton}
+          </Button>
         </div>
       </div>
     </Header>
