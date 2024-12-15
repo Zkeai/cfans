@@ -1,4 +1,4 @@
-import NextAuth, { CredentialsSignin } from "next-auth";
+import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import Twitter from "next-auth/providers/twitter";
@@ -104,8 +104,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: async ({ user, account }) => {
       if (account?.provider === "google" || account?.provider === "github" || account?.provider === "twitter") {
         try {
-          let { email, name, image, id } = user;
-
+          let { email } = user;
+          const { name, image, id } = user
 
           if (email === undefined) {
             email = `${name}@cfans.com`
@@ -120,6 +120,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // If the user exists, just return true
             return true;
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           throw new Error("Error while creating user with Google");
         }
