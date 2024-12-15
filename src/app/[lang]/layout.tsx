@@ -13,8 +13,8 @@ const CientFooter = dynamic(() => import("../client/ClientFooter"), {
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next.js I18N App",
-  description: "A Next.js app with server-side internationalization",
+  title: "cfans ｜ web3",
+  description: "cfans for web3",
 };
 
 export default async function RootLayout({
@@ -22,7 +22,7 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
+  params: { lang: "zh" | "en" };
 }) {
   const t = await getDictionary(params.lang);
 

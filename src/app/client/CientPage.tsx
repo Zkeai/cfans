@@ -1,20 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+
+import { Layout, Nav, Breadcrumb, Skeleton } from "@douyinfe/semi-ui";
 import {
-  Layout,
-  Nav,
-  Button,
-  Breadcrumb,
-  Skeleton,
-  Avatar,
-} from "@douyinfe/semi-ui";
-import {
-  IconSemiLogo,
-  IconBell,
-  IconHelpCircle,
-  IconBytedanceLogo,
   IconHome,
   IconHistogram,
   IconLive,
@@ -22,7 +11,6 @@ import {
 } from "@douyinfe/semi-icons";
 
 const ClientComponent = () => {
-  const router = useRouter();
   const { Sider, Content } = Layout;
 
   return (

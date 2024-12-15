@@ -1,17 +1,15 @@
 // components/ClientHeader.tsx
 "use client";
-
-import React, { useState } from "react";
+// components/ClientHeader.tsx
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Layout, Nav, Button } from "@douyinfe/semi-ui";
-import {
-  IconSemiLogo,
-  IconBell,
-  IconHelpCircle,
-  IconMoon,
-  IconSun,
-} from "@douyinfe/semi-icons";
+import { Layout, Button, Avatar } from "@douyinfe/semi-ui"; // 导入 Avatar
+import { signIn } from "next-auth/react";
+
+import { IconSemiLogo, IconMoon, IconSun } from "@douyinfe/semi-icons";
 import LocaleSwitcher from "../../components/locale-switcher";
+import { getSession } from "next-auth/react";
 
 const ClientHeader = ({
   loginButton,
@@ -26,6 +24,19 @@ const ClientHeader = ({
   doc: string;
   local: string;
 }) => {
+  const [user, setUser] = useState<any>(null); // 设置类型为 any，便于访问用户数据
+  useEffect(() => {
+    const getUser = async () => {
+      const session = await getSession();
+      setUser(session?.user as any);
+    };
+    getUser();
+  }, []);
+
+  const pathname = usePathname();
+  const isLoginPage =
+    pathname.includes("/login") || pathname.includes("/register");
+
   const router = useRouter();
   const { Header } = Layout;
   const [isMoon, setIsMoon] = useState(true);
@@ -40,26 +51,19 @@ const ClientHeader = ({
     setIsMoon(!isMoon);
   };
 
-  // 导航项配置
   const navItems = [
     { key: "shop", label: shop, path: `/${local}/` },
     { key: "order", label: order, path: `/${local}/order` },
     { key: "doc", label: doc, path: `/${local}/doc` },
   ];
 
-  // 选中状态
   const [selectedKey, setSelectedKey] = useState(navItems[0].key);
 
-  // 点击导航项
   const handleClick = (key: string, path: string) => {
-    setSelectedKey(key); // 更新选中状态
-    router.push(path); // 跳转页面
+    setSelectedKey(key);
+    router.push(path);
   };
-
-  //跳转登陆页面
-  const loginHandle = () => {
-    router.push("login");
-  };
+  if (isLoginPage) return null;
 
   return (
     <Header
@@ -68,14 +72,14 @@ const ClientHeader = ({
         height: "8vh",
         backgroundColor: "var(--semi-color-bg-1)",
         display: "flex",
-        alignItems: "center", // 确保 Header 内部内容垂直居中
+        alignItems: "center",
       }}
     >
       <div
         style={{
           margin: "0 auto",
           display: "flex",
-          alignItems: "center", // 确保子项内容垂直居中
+          alignItems: "center",
           width: "100%",
         }}
       >
@@ -91,7 +95,7 @@ const ClientHeader = ({
             flexGrow: 1,
             gap: "24px",
             justifyContent: "center",
-            alignItems: "center", // 确保导航项垂直居中
+            alignItems: "center",
           }}
         >
           {navItems.map((item) => (
@@ -117,7 +121,7 @@ const ClientHeader = ({
         <div
           style={{
             display: "flex",
-            alignItems: "center", // 确保按钮垂直居中
+            alignItems: "center",
             gap: "12px",
           }}
         >
@@ -127,19 +131,32 @@ const ClientHeader = ({
             style={{ color: "var(--semi-color-text-2)" }}
             onClick={toggleIcon}
           />
-          {/* 集成语言切换器 */}
           <LocaleSwitcher />
-          <Button
-            theme="borderless"
-            style={{
-              color: "var(--semi-color-bg-4)",
-              backgroundColor: "rgba(var(--semi-grey-9), 1)",
-              marginRight: "2rem",
-            }}
-            onClick={() => loginHandle()}
-          >
-            {loginButton}
-          </Button>
+          {user ? (
+            <Avatar
+              src={user.image || "/favicon.ico"} // 使用用户头像或默认头像
+              alt="User Avatar"
+              style={{
+                borderRadius: "50%",
+                width: "36px",
+                height: "36px",
+                cursor: "pointer",
+              }}
+              onClick={() => router.push(`/${local}/profile`)} // 点击头像跳转到个人中心
+            />
+          ) : (
+            <Button
+              theme="borderless"
+              style={{
+                color: "var(--semi-color-bg-4)",
+                backgroundColor: "rgba(var(--semi-grey-9), 1)",
+                marginRight: "2rem",
+              }}
+              onClick={() => signIn()}
+            >
+              {loginButton}
+            </Button>
+          )}
         </div>
       </div>
     </Header>

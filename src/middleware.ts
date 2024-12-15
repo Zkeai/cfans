@@ -1,7 +1,9 @@
 // ./src/middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+
 import { i18n } from './i18n-config'
+export { auth as Localemiddleware } from "@/lib/auth"
 
 // 获取用户语言偏好
 function getLocale(request: NextRequest): string {
@@ -22,6 +24,7 @@ function getLocale(request: NextRequest): string {
   // 未匹配上，返回默认语言
   return i18n.defaultLocale;
 }
+
 
 // 中间件
 export function middleware(request: NextRequest) {
@@ -44,3 +47,4 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'], // 排除 API 请求和静态文件
 }
+

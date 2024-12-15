@@ -1,4 +1,3 @@
-import LocaleSwitcher from "@/components/locale-switcher";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
 import { Metadata } from "next";
@@ -14,7 +13,7 @@ export default async function Home({
 
   return (
     <div>
-      <ClientPage />
+      <ClientPage name={t("title")} />
     </div>
   );
 }
