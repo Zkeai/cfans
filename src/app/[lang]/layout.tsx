@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import { getDictionary } from "@/get-dictionary";
+import { SessionProvider } from "next-auth/react";
 const CientHeader = dynamic(() => import("../client/ClientHeader"), {
   ssr: false,
 });
@@ -29,16 +30,18 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body className={inter.className}>
-        <CientHeader
-          loginButton={t("loginButton")}
-          shop={t("shop")}
-          order={t("order")}
-          doc={t("doc")}
-          local={params.lang}
-        />
-        <div className="h-[85vh]">{children}</div>
+        <SessionProvider>
+          <CientHeader
+            loginButton={t("loginButton")}
+            shop={t("shop")}
+            order={t("order")}
+            doc={t("doc")}
+            local={params.lang}
+          />
+          <div className="h-[85vh]">{children}</div>
 
-        <CientFooter />
+          <CientFooter />
+        </SessionProvider>
       </body>
     </html>
   );

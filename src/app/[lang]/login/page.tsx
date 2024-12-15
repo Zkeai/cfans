@@ -6,10 +6,15 @@ import {
   IconBrandTwitter,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { signIn } from "next-auth/react"; // 使用 next-auth/react 的 signIn
+import { useSession, signIn } from "next-auth/react"; // 使用 next-auth/react 的 signIn
 import { login } from "@/action/user";
+import { redirect } from "next/navigation";
 
 const Login = () => {
+  const { data } = useSession();
+  if (data?.user) {
+    redirect("/");
+  }
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 定义错误信息的状态
 
   const handleSignIn = (provider: string) => {
