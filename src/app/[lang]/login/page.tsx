@@ -1,101 +1,68 @@
-"use client";
+"use client"; // 将整个组件声明为客户端组件
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   IconBrandGithub,
   IconBrandTwitter,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
-import { getSession } from "next-auth/react";
-import { signIn } from "@/lib/auth";
+import { signIn } from "next-auth/react"; // 使用 next-auth/react 的 signIn
 import { login } from "@/action/user";
 
 const Login = () => {
-  const router = useRouter();
-  const [error, setError] = useState(""); // 错误状态
-  const [loading, setLoading] = useState(false); // 加载状态
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // 定义错误信息的状态
 
-  // 检查用户是否已经登录
-  useEffect(() => {
-    const checkSession = async () => {
-      const session = await getSession();
-      if (session?.user) {
-        router.push("/"); // 已登录跳转首页
-      }
-    };
-    checkSession();
-  }, [router]);
-
-  // 处理 OAuth 登录
-  const handleOAuthSignIn = async (provider: string) => {
-    setLoading(true);
-    setError("");
-    try {
-      const result = await signIn(provider, { redirect: false });
-      if (!result?.error) {
-        router.push("/"); // 登录成功
-      } else {
-        setError(result.error || "Authentication failed");
-      }
-    } catch (err) {
-      setError("Something went wrong during sign in.");
-    } finally {
-      setLoading(false);
-    }
+  const handleSignIn = (provider: string) => {
+    setErrorMessage(null); // 清除之前的错误信息
+    signIn(provider, { callbackUrl: "/" }).catch((error) => {
+      setErrorMessage(`OAuth SignIn Error: ${error.message}`);
+    });
   };
 
-  // 处理表单登录
-  const handleCredentialsSignIn = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
-    setError("");
+    const formData = new FormData(event.target as HTMLFormElement);
 
-    const formData = new FormData(event.currentTarget);
+    setErrorMessage(null); // 清除之前的错误信息
 
     try {
-      const result = await login(formData);
-
-      if (!result?.error) {
-        router.push("/"); // 登录成功
+      const response = await login(formData);
+      if (!response?.success) {
+        setErrorMessage(response?.message || "Invalid email or password.");
       } else {
-        setError(result.error || "Invalid email or password");
+        window.location.href = "/";
       }
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
-      setLoading(false);
+    } catch (error: any) {
+      setErrorMessage(error?.message || "An unexpected error occurred.");
     }
   };
 
   return (
     <div className="relative h-screen flex justify-center items-center bg-gradient-to-br from-blue-100 to-purple-100">
-      {/* 背景 */}
       <div className="absolute w-72 h-72 bg-purple-300 opacity-30 rounded-full blur-3xl top-10 left-10"></div>
       <div className="absolute w-96 h-96 bg-blue-300 opacity-30 rounded-full blur-3xl bottom-10 right-10"></div>
 
-      {/* 登录表单 */}
       <div className="relative bg-white shadow-xl rounded-xl p-8 max-w-sm w-full">
-        <h3 className="text-lg font-extrabold text-center mb-4">
-          Sign in to Cfans
+        <h3 className="text-md font-extrabold text-center mb-4">
+          Sign in to CFans
         </h3>
         <p className="text-sm text-center mb-4 text-gray-500">
           Welcome back! Please sign in to continue
         </p>
 
-        {error && (
-          <div className="mb-4 text-red-500 text-sm text-center">{error}</div>
+        {/* 显示错误信息 */}
+        {errorMessage && (
+          <div className="bg-red-100 border border-red-400 text-sm text-red-700 px-4 py-2 rounded mb-4">
+            {errorMessage}
+          </div>
         )}
 
         <div className="grid grid-cols-3 gap-4 mb-6">
           {["github", "twitter", "google"].map((provider) => (
             <button
               key={provider}
-              onClick={() => handleOAuthSignIn(provider)}
+              onClick={() => handleSignIn(provider)}
               className="flex-grow flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-500 h-[40px] rounded-md hover:bg-gray-100 transition"
-              disabled={loading}
             >
               {provider === "github" && <IconBrandGithub size={18} />}
               {provider === "twitter" && <IconBrandTwitter size={18} />}
@@ -104,16 +71,12 @@ const Login = () => {
             </button>
           ))}
         </div>
-
-        {/* 分隔线 */}
         <div className="relative flex items-center my-4">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-2 text-gray-400 text-sm">or</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
-
-        {/* 表单登录 */}
-        <form onSubmit={handleCredentialsSignIn}>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -125,8 +88,8 @@ const Login = () => {
               type="email"
               id="email"
               name="email"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
               required
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
             />
           </div>
           <div className="mb-4">
@@ -140,19 +103,17 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
               required
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-violet-600 text-white py-2 rounded-md hover:bg-violet-700 transition"
-            disabled={loading}
+            className="w-full bg-violet-600 text-white py-2 rounded-md hover:bg-violet-200 transition"
           >
-            {loading ? "Signing in..." : "Continue"}
+            Continue
           </button>
         </form>
-
         <p className="text-center text-sm text-gray-500 mt-4">
           Don’t have an account?{" "}
           <a href="/register" className="text-violet-500 hover:underline">

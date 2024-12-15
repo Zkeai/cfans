@@ -25,12 +25,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Authorization logic for credentials-based login
       authorize: async (credentials) => {
         try {
+          // const email = credentials?.email as string
+          // const password = credentials?.password as string
+
           // Parse credentials using Zod schema
           const { email, password } = await signInSchema.parseAsync(credentials);
 
           // Check if email or password is empty
           if (!email || !password) {
-            throw new Error("Please provide both email & password");
+            throw new Error("Please provide both email & password(请提供电子邮件和密码)");
           }
 
           await connectDB();
@@ -39,14 +42,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const user = await User.findOne({ email }).select("+password +role");
 
           if (!user) {
-            throw new Error("Invalid email or password");
+            throw new Error("User does not exist(用户不存在)");
           }
 
           // Check if the password matches
           const isMatched = await compare(password, user.password);
 
           if (!isMatched) {
-            throw new Error("Password did not match");
+            throw new Error("Password did not match(密码不匹配)");
           }
 
           // Return user data
@@ -59,13 +62,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
 
           return userData;
-        } catch (error) {
+        } catch (error: any) {
+
           if (error instanceof ZodError) {
+
             // Return null to indicate invalid credentials or Zod validation error
-            throw new Error("Invalid email or password format");
+            throw new Error(error["issues"][0].message);
           }
-          // Rethrow other errors to be handled in the `signIn` callback
-          throw error;
+
+
+          throw new Error(error.message);
         }
       },
     }),
@@ -96,10 +102,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     // SignIn callback to handle provider-specific logic (e.g., Google)
     signIn: async ({ user, account }) => {
-      if (account?.provider === "google") {
+      if (account?.provider === "google" || account?.provider === "github" || account?.provider === "twitter") {
         try {
-          const { email, name, image, id } = user;
+          let { email, name, image, id } = user;
 
+
+          if (email === undefined) {
+            email = `${name}@cfans.com`
+          }
           await connectDB();
           const alreadyUser = await User.findOne({ email });
 
@@ -115,7 +125,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+
+
       if (account?.provider === "credentials") {
+
         return true; // Return true for successful credentials login
       } else {
         return false; // Return false for other providers if not handling them

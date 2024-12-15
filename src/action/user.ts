@@ -23,10 +23,10 @@ const login = async (formData: FormData) => {
 
             return { success: false, error: response.error };
         }
-    } catch (error) {
+    } catch (error: any) {
 
 
-        return { success: false, error: error };
+        return { success: false, message: error["cause"]?.err?.message };
     }
     redirect("/");
 };
@@ -38,14 +38,24 @@ const register = async (formdata: FormData) => {
     const password = formdata.get("password") as string
 
     if (!firstName || !lastName || !email || !password) {
-        throw new Error("Please fill all fields")
+
+        return { success: false, message: "Please fill all fields(请完整填写参数)" };
+    }
+
+    if (password.length < 8) {
+
+        return { success: false, message: "Password must be more than 8 characters(密码最小8位)" };
+    }
+    if (password.length > 32) {
+
+        return { success: false, message: "Password must be less than 32 characters(密码最大32位)" };
     }
 
     await connectDB();
 
     // existing user
     const existingUser = await User.findOne({ email });
-    if (existingUser) throw new Error("use already exists");
+    if (existingUser) return { success: false, message: "use already exists(用户已存在)" }
 
     const hashedPassword = await hash(password, 12)
     await User.create({ firstName, lastName, email, password: hashedPassword })

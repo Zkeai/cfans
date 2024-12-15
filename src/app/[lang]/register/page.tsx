@@ -1,19 +1,42 @@
-import React from "react";
+"use client";
 
+import React, { useState } from "react";
 import {
   IconBrandGithub,
   IconBrandTwitter,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { register } from "@/action/user";
-import { signIn } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { getSession } from "@/lib/getSession";
+import { signIn } from "next-auth/react"; // 客户端的 signIn 方法
+import { register } from "@/action/user"; // 假设这个是一个客户端调用方法
 
-const Register = async () => {
-  const session = await getSession();
-  const user = session?.user;
-  if (user) redirect("/");
+const Register = () => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleOAuthSignIn = async (provider: string) => {
+    try {
+      await signIn(provider, { callbackUrl: "/" });
+    } catch (err) {
+      setError("OAuth Sign-In failed. Please try again.");
+      console.error("OAuth Sign-In Error:", err);
+    }
+  };
+
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      const response = await register(formData);
+      if (!response.success) {
+        setError(response.message || "Registration failed.");
+      } else {
+        window.location.href = "/";
+      }
+    } catch (err: any) {
+      setError("Error during registration. Please try again.");
+      console.error("Registration Error:", err.message);
+    }
+  };
 
   return (
     <div className="relative h-screen flex justify-center items-center bg-gradient-to-br from-blue-100 to-purple-100">
@@ -30,33 +53,30 @@ const Register = async () => {
 
         <div className="grid grid-cols-3 gap-4 mb-6">
           {["github", "twitter", "google"].map((provider) => (
-            <form
-              action={async () => {
-                "use server";
-                await signIn(provider);
-              }}
+            <button
               key={provider}
-              className="flex justify-center"
+              onClick={() => handleOAuthSignIn(provider)}
+              className="flex-grow flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-500 h-[40px] rounded-md hover:bg-gray-100 transition"
             >
-              <button
-                type="submit"
-                className="flex-grow flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-500 h-[40px] rounded-md hover:bg-gray-100 transition"
-              >
-                {provider === "github" && <IconBrandGithub size={18} />}
-                {provider === "twitter" && <IconBrandTwitter size={18} />}
-                {provider === "google" && <IconBrandGoogle size={18} />}
-                <span className="text-sm capitalize">{provider}</span>
-              </button>
-            </form>
+              {provider === "github" && <IconBrandGithub size={18} />}
+              {provider === "twitter" && <IconBrandTwitter size={18} />}
+              {provider === "google" && <IconBrandGoogle size={18} />}
+              <span className="text-sm capitalize">{provider}</span>
+            </button>
           ))}
         </div>
-        {/* 使用带样式的横线 */}
+
         <div className="relative flex items-center my-4">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-2 text-gray-400 text-sm">or</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
-        <form action={register}>
+
+        {error && (
+          <div className="mb-4 text-sm text-red-500 text-center">{error}</div>
+        )}
+
+        <form onSubmit={handleRegister}>
           <div className="flex gap-4 mb-6 ">
             <div>
               <label
@@ -69,6 +89,7 @@ const Register = async () => {
                 type="text"
                 id="firstname"
                 name="firstname"
+                required
                 className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 `}
               />
             </div>
@@ -83,6 +104,7 @@ const Register = async () => {
                 id="lastname"
                 type="text"
                 name="lastname"
+                required
                 className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 `}
               />
             </div>
@@ -98,6 +120,7 @@ const Register = async () => {
               type="email"
               id="email"
               name="email"
+              required
               className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 `}
             />
           </div>
@@ -112,6 +135,7 @@ const Register = async () => {
               type="password"
               id="password"
               name="password"
+              required
               className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 `}
             />
           </div>
