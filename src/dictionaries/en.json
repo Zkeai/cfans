@@ -3,5 +3,7 @@
   "loginButton": "Login",
   "shop": "SHOP",
   "order": "ORDER",
-  "doc": "DOC"
+  "doc": "DOC",
+  "manageUser": "Manage User",
+  "lagout": "Sign Out"
 }

@@ -6,11 +6,14 @@ import {
   IconBrandTwitter,
   IconBrandGoogle,
 } from "@tabler/icons-react";
-import { useSession, signIn } from "next-auth/react"; // 使用 next-auth/react 的 signIn
+import { useSession, signIn, getSession } from "next-auth/react"; // 使用 next-auth/react 的 signIn
 import { login } from "@/action/user";
 import { redirect } from "next/navigation";
+import { useHeaderStore } from "@/app/store/header";
 
 const Login = () => {
+  const setUser = useHeaderStore((state: any) => state.setUser);
+
   const { data } = useSession();
   if (data?.user) {
     redirect("/");
@@ -32,6 +35,9 @@ const Login = () => {
 
     try {
       const response = await login(formData);
+      const session = await getSession();
+      const user = session?.user;
+      setUser(user);
       if (!response?.success) {
         setErrorMessage(response?.message || "Invalid email or password.");
       } else {

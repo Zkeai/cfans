@@ -1,45 +1,52 @@
-// components/ClientHeader.tsx
 "use client";
-// components/ClientHeader.tsx
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Layout, Button, Avatar } from "@douyinfe/semi-ui"; // 导入 Avatar
-import { signIn } from "next-auth/react";
 
-import { IconSemiLogo, IconMoon, IconSun } from "@douyinfe/semi-icons";
+import {
+  Dropdown,
+  Avatar,
+  Button,
+  Layout,
+  Tag,
+  Space,
+} from "@douyinfe/semi-ui";
+import {
+  IconSemiLogo,
+  IconMoon,
+  IconSun,
+  IconVerify,
+} from "@douyinfe/semi-icons";
+import React, { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
 import LocaleSwitcher from "../../components/locale-switcher";
-import { getSession } from "next-auth/react";
+import { useHeaderStore } from "../store/header";
 
 const ClientHeader = ({
   loginButton,
   shop,
   order,
   doc,
+  manageUser,
+  lagout,
   local,
 }: {
   loginButton: string;
   shop: string;
   order: string;
   doc: string;
+  manageUser: string;
+  lagout: string;
   local: string;
 }) => {
-  const [user, setUser] = useState<any>(null); // 设置类型为 any，便于访问用户数据
-  useEffect(() => {
-    const getUser = async () => {
-      const session = await getSession();
-      setUser(session?.user as any);
-    };
-    getUser();
-  }, []);
-
+  const user = useHeaderStore((state: any) => state.user);
+  const removeUser = useHeaderStore((state: any) => state.removeUser);
   const pathname = usePathname();
-  const isLoginPage =
-    pathname.includes("/login") || pathname.includes("/register");
-
   const router = useRouter();
   const { Header } = Layout;
+
+  const isLoginPage =
+    pathname.includes("/login") || pathname.includes("/register");
   const [isMoon, setIsMoon] = useState(true);
+  const [selectedKey, setSelectedKey] = useState("shop");
 
   const toggleIcon = () => {
     const body = document.body;
@@ -57,13 +64,85 @@ const ClientHeader = ({
     { key: "doc", label: doc, path: `/${local}/doc` },
   ];
 
-  const [selectedKey, setSelectedKey] = useState(navItems[0].key);
-
   const handleClick = (key: string, path: string) => {
     setSelectedKey(key);
     router.push(path);
   };
+
   if (isLoginPage) return null;
+
+  const userDropdown = (
+    <div
+      style={{
+        padding: "16px",
+        width: "auto",
+        background: "var(--semi-color-bg-1)",
+        borderRadius: "4px",
+        boxShadow: "var(--semi-shadow-elevated)",
+      }}
+    >
+      {/* 用户信息部分 */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "12px",
+        }}
+      >
+        <Avatar
+          src={user?.image || "/favicon.ico"}
+          alt="User Avatar"
+          style={{
+            width: "40px",
+            height: "40px",
+            marginRight: "12px",
+          }}
+        />
+        <div>
+          <div style={{ fontWeight: 600 }}>
+            <Space>
+              {user?.email || ""}
+              <Tag
+                color="light-blue"
+                prefixIcon={<IconVerify />}
+                size="large"
+                shape="circle"
+                type="solid"
+              >
+                {user?.role}
+              </Tag>
+            </Space>
+          </div>
+        </div>
+      </div>
+      {/* 操作按钮 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "8px",
+        }}
+      >
+        <Button
+          theme="light"
+          style={{ flex: 1 }}
+          onClick={() => router.push(`/${local}/profile`)}
+        >
+          {manageUser}
+        </Button>
+        <Button
+          theme="light"
+          style={{ flex: 1 }}
+          onClick={() => {
+            removeUser();
+            signOut();
+          }}
+        >
+          {lagout}
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <Header
@@ -88,7 +167,7 @@ const ClientHeader = ({
           style={{ height: "36px", fontSize: 36, marginRight: "16px" }}
         />
 
-        {/* 中间导航项 */}
+        {/* 中间导航 */}
         <div
           style={{
             display: "flex",
@@ -117,7 +196,7 @@ const ClientHeader = ({
           ))}
         </div>
 
-        {/* 右侧操作按钮 */}
+        {/* 右侧操作 */}
         <div
           style={{
             display: "flex",
@@ -133,17 +212,23 @@ const ClientHeader = ({
           />
           <LocaleSwitcher />
           {user ? (
-            <Avatar
-              src={user.image || "/favicon.ico"} // 使用用户头像或默认头像
-              alt="User Avatar"
-              style={{
-                borderRadius: "50%",
-                width: "36px",
-                height: "36px",
-                cursor: "pointer",
-              }}
-              onClick={() => router.push(`/${local}/profile`)} // 点击头像跳转到个人中心
-            />
+            <Dropdown
+              trigger="click"
+              position="bottomRight"
+              render={userDropdown}
+            >
+              <Avatar
+                src={user.image || "/favicon.ico"}
+                alt="User Avatar"
+                style={{
+                  borderRadius: "50%",
+                  width: "36px",
+                  height: "36px",
+                  cursor: "pointer",
+                  marginRight: "2rem",
+                }}
+              />
+            </Dropdown>
           ) : (
             <Button
               theme="borderless"

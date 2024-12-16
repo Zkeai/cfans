@@ -36,6 +36,8 @@ export default async function RootLayout({
             shop={t("shop")}
             order={t("order")}
             doc={t("doc")}
+            manageUser={t("manageUser")}
+            lagout={t("lagout")}
             local={params.lang}
           />
           <div className="h-[85vh]">{children}</div>

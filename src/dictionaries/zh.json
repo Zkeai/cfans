@@ -3,5 +3,7 @@
   "loginButton": "登入",
   "shop": "店铺首页",
   "order": "查询订单",
-  "doc": "教程文档"
+  "doc": "教程文档",
+  "manageUser": "管理账户",
+  "lagout": "退出登陆"
 }
