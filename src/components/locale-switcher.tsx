@@ -5,6 +5,7 @@ import { i18n } from "@/i18n-config";
 import { useEffect, useState } from "react";
 import { Button, Dropdown } from "@douyinfe/semi-ui";
 import { IconLanguage } from "@douyinfe/semi-icons";
+import { useTranslationStore } from "@/store/translation";
 
 export default function LocaleSwitcher() {
   const pathName = usePathname();
@@ -38,10 +39,20 @@ export default function LocaleSwitcher() {
       position="bottom"
       render={
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleLocaleChange("en")}>
+          <Dropdown.Item
+            onClick={() => {
+              useTranslationStore.getState().setlang("en");
+              handleLocaleChange("en");
+            }}
+          >
             {currentLocale === "en" ? "English" : "英文"}
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleLocaleChange("zh")}>
+          <Dropdown.Item
+            onClick={() => {
+              useTranslationStore.getState().setlang("zh");
+              handleLocaleChange("zh");
+            }}
+          >
             {currentLocale === "en" ? "Simplified Chinese" : "中文"}
           </Dropdown.Item>
         </Dropdown.Menu>

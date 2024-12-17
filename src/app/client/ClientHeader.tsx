@@ -15,10 +15,10 @@ import {
   IconVerify,
 } from "@douyinfe/semi-icons";
 import React, { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { signIn, signOut } from "next-auth/react";
+import { useRouter, usePathname, redirect } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 import LocaleSwitcher from "../../components/locale-switcher";
-import { useHeaderStore } from "../store/header";
+import { useHeaderStore } from "@/store/header";
 
 const ClientHeader = ({
   loginButton,
@@ -37,7 +37,9 @@ const ClientHeader = ({
   lagout: string;
   local: string;
 }) => {
-  const user = useHeaderStore((state: any) => state.user);
+  const { data } = useSession();
+
+  const user = useHeaderStore((state: any) => state.user) || data?.user;
   const removeUser = useHeaderStore((state: any) => state.removeUser);
   const pathname = usePathname();
   const router = useRouter();
@@ -60,7 +62,7 @@ const ClientHeader = ({
 
   const navItems = [
     { key: "shop", label: shop, path: `/${local}/` },
-    { key: "order", label: order, path: `/${local}/order` },
+    { key: "order", label: order, path: `/${local}/dashboard/order` },
     { key: "doc", label: doc, path: `/${local}/doc` },
   ];
 
@@ -136,6 +138,7 @@ const ClientHeader = ({
           onClick={() => {
             removeUser();
             signOut();
+            redirect("/login");
           }}
         >
           {lagout}

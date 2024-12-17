@@ -1,17 +1,47 @@
 "use client";
 
 import React from "react";
-
 import { Layout, Nav, Breadcrumb, Skeleton } from "@douyinfe/semi-ui";
 import {
-  IconHome,
-  IconHistogram,
-  IconLive,
-  IconSetting,
+  IconCart,
+  IconCreditCard,
+  IconShoppingBag,
 } from "@douyinfe/semi-icons";
+import { useRouter } from "next/navigation"; // Next.js 路由 hook
 
 const ClientComponent = () => {
   const { Sider, Content } = Layout;
+  const router = useRouter();
+
+  // 定义路由和菜单信息
+  const routes = [
+    {
+      key: "Home",
+      text: "创建新订单",
+      icon: <IconCart size="large" />,
+      path: "/home",
+    },
+    {
+      key: "Recharge",
+      text: "余额充值",
+      icon: <IconCreditCard size="large" />,
+      path: "/recharge",
+    },
+    {
+      key: "Orders",
+      text: "我的订单",
+      icon: <IconShoppingBag size="large" />,
+      path: "/orders",
+    },
+  ];
+
+  // 处理菜单点击
+  const handleNavSelect = (data: { itemKey: string }) => {
+    const selectedRoute = routes.find((route) => route.key === data.itemKey);
+    if (selectedRoute) {
+      router.push(selectedRoute.path); // 跳转到对应路径
+    }
+  };
 
   return (
     <Layout
@@ -30,28 +60,12 @@ const ClientComponent = () => {
           <Nav
             style={{ maxWidth: 220, height: "100%" }}
             defaultSelectedKeys={["Home"]}
-            items={[
-              {
-                itemKey: "Home",
-                text: "首页",
-                icon: <IconHome size="large" />,
-              },
-              {
-                itemKey: "Histogram",
-                text: "基础数据",
-                icon: <IconHistogram size="large" />,
-              },
-              {
-                itemKey: "Live",
-                text: "测试功能",
-                icon: <IconLive size="large" />,
-              },
-              {
-                itemKey: "Setting",
-                text: "设置",
-                icon: <IconSetting size="large" />,
-              },
-            ]}
+            items={routes.map((route) => ({
+              itemKey: route.key,
+              text: route.text,
+              icon: route.icon,
+            }))}
+            onSelect={handleNavSelect} // 绑定点击事件
             footer={{
               collapseButton: true,
             }}
@@ -67,12 +81,7 @@ const ClientComponent = () => {
             style={{
               marginBottom: "24px",
             }}
-            routes={[
-              "首页",
-              "当这个页面标题很长时需要省略",
-              "上一页",
-              "详情页",
-            ]}
+            routes={["首页", "某页", "详情页"]}
           />
           <div
             style={{

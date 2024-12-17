@@ -5,5 +5,10 @@
   "order": "ORDER",
   "doc": "DOC",
   "manageUser": "Manage User",
-  "lagout": "Sign Out"
+  "lagout": "Sign Out",
+  "home": "Home",
+  "createOrder": "Create Order",
+  "myOrder": "My Orders",
+  "addfunds": "Balance Recharge",
+  "footer": "All Good Things Come Unexpectedly"
 }

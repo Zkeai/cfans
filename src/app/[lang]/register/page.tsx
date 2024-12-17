@@ -13,7 +13,7 @@ import { redirect } from "next/navigation";
 const Register = () => {
   const { data } = useSession();
   if (data?.user) {
-    redirect("/");
+    redirect("/dashboard");
   }
   const [error, setError] = useState<string | null>(null);
 

@@ -5,5 +5,10 @@
   "order": "查询订单",
   "doc": "教程文档",
   "manageUser": "管理账户",
-  "lagout": "退出登陆"
+  "lagout": "退出登陆",
+  "home": "首页",
+  "createOrder": "创建新订单",
+  "myOrder": "我的订单",
+  "addfunds": "余额充值",
+  "footer": "所有美好，不期而遇"
 }

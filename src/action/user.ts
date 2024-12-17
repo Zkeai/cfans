@@ -28,7 +28,7 @@ const login = async (formData: FormData) => {
 
         return { success: false, message: error["cause"]?.err?.message };
     }
-    redirect("/");
+    redirect("/dashboard");
 };
 
 const register = async (formdata: FormData) => {

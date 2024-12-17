@@ -9,20 +9,20 @@ import {
 import { useSession, signIn, getSession } from "next-auth/react"; // 使用 next-auth/react 的 signIn
 import { login } from "@/action/user";
 import { redirect } from "next/navigation";
-import { useHeaderStore } from "@/app/store/header";
+import { useHeaderStore } from "@/store/header";
 
 const Login = () => {
   const setUser = useHeaderStore((state: any) => state.setUser);
 
   const { data } = useSession();
   if (data?.user) {
-    redirect("/");
+    redirect("/dashboard");
   }
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 定义错误信息的状态
 
   const handleSignIn = (provider: string) => {
     setErrorMessage(null); // 清除之前的错误信息
-    signIn(provider, { callbackUrl: "/" }).catch((error) => {
+    signIn(provider, { callbackUrl: "/dashboard" }).catch((error) => {
       setErrorMessage(`OAuth SignIn Error: ${error.message}`);
     });
   };

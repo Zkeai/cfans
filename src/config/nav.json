@@ -1,0 +1,22 @@
+[
+  {
+    "itemKey": "/dashboard",
+    "text": "首页",
+    "icon": "icon-shouye"
+  },
+  {
+    "itemKey": "createorder",
+    "text": "创建新订单",
+    "icon": "icon-RPC"
+  },
+  {
+    "itemKey": "order",
+    "text": "我的订单",
+    "icon": "icon-RPC"
+  },
+  {
+    "itemKey": "addfuns",
+    "text": "余额充值",
+    "icon": "icon-RPC"
+  }
+]
