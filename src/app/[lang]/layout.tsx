@@ -16,8 +16,8 @@ const CientFooter = dynamic(() => import("../client/ClientFooter"), {
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "cfans ｜ web3",
-  description: "cfans for web3",
+  title: "cfans",
+  description: "cfans",
 };
 
 export default async function RootLayout({
@@ -45,7 +45,7 @@ export default async function RootLayout({
             lagout={t("lagout")}
             local={params.lang}
           />
-          <div className="h-[85vh]">{children}</div>
+          <div>{children}</div>
 
           <CientFooter content={t("footer")} />
         </SessionProvider>

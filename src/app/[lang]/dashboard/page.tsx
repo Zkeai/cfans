@@ -1,44 +1,73 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Button } from "@douyinfe/semi-ui";
-import Image from "next/image"; // 使用 Next.js 的 Image 组件
+import { useRouter } from "next/navigation";
+import { getDictionary } from "@/get-dictionary";
+import { useTranslationStore } from "@/store/translation";
 
 const Page = () => {
+  const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);
+  const lang = useTranslationStore((state) => state.lang);
+  // 提取语言前缀
+  const langPrefix = lang === "en" ? "/en" : "/zh";
+
+  const router = useRouter();
+  const locale = langPrefix; // 获取当前语言环境
+
+  // 加载翻译词典
+  useEffect(() => {
+    const loadDictionary = async () => {
+      const dictionary = await getDictionary(lang);
+      setT(() => dictionary);
+    };
+
+    loadDictionary();
+  }, [lang]);
+
   const handleButtonClick = () => {
-    window.open("https://github.com/Zkeai", "_blank"); // 打开一个新的标签页
+    window.open("https://github.com/Zkeai", "_blank");
+  };
+
+  const handleButtonClick1 = () => {
+    router.push(`${locale}/dashboard/order`); // 根据语言跳转
   };
 
   return (
-    <div className="h-[80vh] flex flex-col p-28">
-      <title>首页</title>
+    <div className="h-[80vh] flex flex-col px-6 md:px-28 py-10 md:py-28">
+      <title>{langPrefix === "/zh" ? "cfans｜首页" : "cfans｜Home"}</title>
 
-      <div className="flex">
-        <div className="flex flex-col max-w-2xl">
-          <div className="text-[24px] leading-[38px] lg:text-[40px] lg:leading-[54px] font-semibold font_l">
-            MuCoin｜让每一次交互都值得信赖
+      <div className="flex flex-col md:flex-row items-center md:items-start">
+        <div className="flex flex-col max-w-full md:max-w-2xl">
+          <div
+            style={{ color: "var(--semi-color-text-1)" }}
+            className="text-[24px] leading-[38px] md:text-[40px] md:leading-[54px] font-semibold font_l text-center md:text-left"
+          >
+            {`Cfans｜${t("indexTitle")}`}
           </div>
 
-          <div className="text-[18px] lg:text-[24px] lg:leading-10 leading-7 text_desc font-semibold my-[24px] mb-[35px] font_l">
-            信赖木鱼社区，使用WEB3链上工具解锁无限可能！我们将复杂的区块链技术简化，为您集成一系列WEB3工具，提供完整脚本支持。
+          <div
+            style={{ color: "var(--semi-color-text-2)" }}
+            className="text-[18px] leading-7 md:text-[24px] md:leading-10 text_desc font-semibold my-6 md:my-[24px] mb-8 md:mb-[35px] font_l text-center md:text-left"
+          >
+            Twitter｜Facebook｜YouTube｜Instagram｜Telegram
           </div>
-          <div>
-            <Space spacing={40}>
+
+          <div className="flex justify-center md:justify-start">
+            <Space spacing={16}>
               <Button
                 size="large"
                 theme="solid"
                 type="warning"
                 style={{ marginRight: 8 }}
+                onClick={handleButtonClick1}
               >
-                开始使用
+                {langPrefix === "/zh" ? "开始使用" : "Get Started"}
               </Button>
               <Button size="large" onClick={handleButtonClick}>
-                木鱼代码库
+                {langPrefix === "/zh" ? "木鱼代码库" : "Code Repository"}
               </Button>
             </Space>
           </div>
-        </div>
-        <div className="mt-[-100px] ml-28">
-          <Image src="/svg/Crypto.svg" alt="Crypto" width={500} height={500} />
         </div>
       </div>
     </div>

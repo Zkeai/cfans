@@ -1,11 +1,47 @@
+/* 自定义滚动条样式 */
 .body::-webkit-scrollbar {
-  width: 3px;
+  width: 3px; /* 滚动条宽度 */
 }
 
 .body::-webkit-scrollbar-thumb {
-  background: rgb(245 158 10);
+  background: rgb(245 158 10); /* 滚动条滑块颜色 */
 }
+
 .body::-webkit-scrollbar-track {
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px; /* 滚动条轨道圆角 */
+  background: rgba(0, 0, 0, 0.1); /* 滚动条轨道颜色 */
+}
+
+/* 响应式布局 */
+/* 移动端样式：屏幕宽度小于等于768px */
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column; /* 子元素垂直堆叠 */
+  }
+
+  .flex-col {
+    width: 100%; /* 子元素占满宽度 */
+  }
+
+  .basis-2/3,
+  .basis-1/3 {
+    width: 100%; /* 主次内容都占满宽度 */
+  }
+}
+
+/* 桌面端样式：屏幕宽度大于768px */
+@media (min-width: 769px) {
+  .container {
+    display: flex;
+    flex-direction: row; /* 子元素横向排列 */
+  }
+
+  .basis-2/3 {
+    width: 66.66%; /* 主内容宽度为2/3 */
+  }
+
+  .basis-1/3 {
+    width: 33.33%; /* 次内容宽度为1/3 */
+  }
 }

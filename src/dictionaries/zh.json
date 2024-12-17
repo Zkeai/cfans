@@ -1,14 +1,21 @@
 {
   "title": "商店首页",
   "loginButton": "登入",
-  "shop": "店铺首页",
-  "order": "查询订单",
-  "doc": "教程文档",
+  "shop": "店铺",
+  "order": "订单",
+  "doc": "文档",
   "manageUser": "管理账户",
   "lagout": "退出登陆",
   "home": "首页",
   "createOrder": "创建新订单",
   "myOrder": "我的订单",
   "addfunds": "余额充值",
-  "footer": "所有美好，不期而遇"
+  "footer": "所有美好，不期而遇",
+  "indexTitle": "社交媒体服务提供商",
+  "createfenlei": "选择分类",
+  "createfuwu": "选择服务",
+  "createurl": "链接",
+  "createnum": "数量",
+  "createprice": "总价格",
+  "createsubmit": "提交"
 }

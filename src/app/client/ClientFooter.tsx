@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Style from "@/components/components.module.css";
 import {
   IconBrandGithub,
   IconBrandTwitter,
@@ -9,6 +8,7 @@ import {
   IconBrandYoutube,
   IconBrandTinderFilled,
 } from "@tabler/icons-react";
+
 interface SocialUrl {
   github: string;
   youtube: string;
@@ -24,52 +24,53 @@ const socialUrl: SocialUrl = {
   dianbao: "https://t.me/+E3Q1hMARTfozNjQ1",
   discord: "https://discord.gg/ZDtxG247RE",
 };
-const Footer: React.FC<{ content: string }> = ({
-  content,
-}: {
-  content: string;
-}) => {
-  const socialclickHandle = (url: string) => {
+
+const Footer: React.FC<{ content: string }> = ({ content }) => {
+  const socialClickHandle = (url: string) => {
     window.open(url, "_blank");
   };
+
   return (
-    <div className=" w-full h-14 flex fixed bottom-0 bg-[--semi-color-warning] items-center">
-      <div className="flex w-1/3 space-x-5 pl-10">
-        <IconBrandTinderFilled
-          size={26}
-          style={{ color: "var(--semi-color-danger)" }}
-        />
-        <span className="font-bold">{content}</span>
-      </div>
-      <div className="grow"></div>
-      <div className="flex w-1/5 space-x-10">
-        <IconBrandGithub
-          size={26}
-          className={Style.social}
-          onClick={() => socialclickHandle(socialUrl.github)}
-        />
-        <IconBrandYoutube
-          size={26}
-          className={Style.social}
-          onClick={() => socialclickHandle(socialUrl.youtube)}
-        />
-        <IconBrandTwitter
-          size={26}
-          className={Style.social}
-          onClick={() => socialclickHandle(socialUrl.twitter)}
-        />
+    <div className="w-full bg-[--semi-color-warning] fixed bottom-0 py-3 px-4 md:px-10">
+      {/* 主容器 */}
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        {/* 左侧内容 */}
+        <div className="flex items-center space-x-3">
+          <IconBrandTinderFilled
+            size={24}
+            style={{ color: "var(--semi-color-danger)" }}
+          />
+          <span className="font-bold text-sm md:text-base">{content}</span>
+        </div>
 
-        <IconBrandTelegram
-          size={26}
-          className={Style.social}
-          onClick={() => socialclickHandle(socialUrl.dianbao)}
-        />
-
-        <IconBrandDiscord
-          size={26}
-          className={Style.social}
-          onClick={() => socialclickHandle(socialUrl.discord)}
-        />
+        {/* 右侧社交图标 */}
+        <div className="mt-3 md:mt-0 flex space-x-4 md:space-x-8 overflow-x-auto">
+          <IconBrandGithub
+            size={22}
+            className="cursor-pointer"
+            onClick={() => socialClickHandle(socialUrl.github)}
+          />
+          <IconBrandYoutube
+            size={22}
+            className="cursor-pointer"
+            onClick={() => socialClickHandle(socialUrl.youtube)}
+          />
+          <IconBrandTwitter
+            size={22}
+            className="cursor-pointer"
+            onClick={() => socialClickHandle(socialUrl.twitter)}
+          />
+          <IconBrandTelegram
+            size={22}
+            className="cursor-pointer"
+            onClick={() => socialClickHandle(socialUrl.dianbao)}
+          />
+          <IconBrandDiscord
+            size={22}
+            className="cursor-pointer"
+            onClick={() => socialClickHandle(socialUrl.discord)}
+          />
+        </div>
       </div>
     </div>
   );

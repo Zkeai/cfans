@@ -23,7 +23,7 @@ import { getDictionary } from "@/get-dictionary";
 const NavNode: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const pathname = usePathname();
+
   const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);
   const activeTab = useSelector((state: RootState) => state.header.activeTab);
   const tabsData = useSelector((state: RootState) => state.header.tabsData);

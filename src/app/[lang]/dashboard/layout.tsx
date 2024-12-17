@@ -27,10 +27,13 @@ const Page = ({ children }: DashboardLayoutProps) => {
   }, [data, status, router]);
 
   return (
-    <div className=" flex h-[85vh]">
+    <div className=" flex h-[86vh]">
       <Provider store={store}>
         <Nav></Nav>
-        <div className="flex-1 flex flex-col">
+        <div
+          className="flex-1 flex flex-col"
+          style={{ background: "var(--semi-color-bg-1)" }}
+        >
           <div className=" flex items-center h-8 w-full shadow-sm">
             <Tab></Tab>
           </div>

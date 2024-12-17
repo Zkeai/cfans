@@ -10,5 +10,12 @@
   "createOrder": "Create Order",
   "myOrder": "My Orders",
   "addfunds": "Balance Recharge",
-  "footer": "All Good Things Come Unexpectedly"
+  "footer": "All Good Things Come Unexpectedly",
+  "indexTitle": "Social Media Service Provider",
+  "createfenlei": "Sort",
+  "createfuwu": "Serve",
+  "createurl": "Url",
+  "createnum": "Num",
+  "createprice": "Total Price",
+  "createsubmit": "Submit"
 }
