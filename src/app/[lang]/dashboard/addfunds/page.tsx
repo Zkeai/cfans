@@ -167,11 +167,6 @@ export default function Home() {
           spacing="medium"
           style={{ width: "100%" }}
         >
-          <Text>
-            实时汇率：1 USDT ={" "}
-            {averagePrice ? `${averagePrice} CNY` : "加载中..."}
-          </Text>
-
           <Space align="center" style={{ width: "100%" }}>
             <Input
               prefix="RMB"
