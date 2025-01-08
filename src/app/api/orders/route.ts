@@ -6,14 +6,17 @@ import { monitorUSDTTransfer } from "@/lib/usdt";
 connectDB()
 
 export async function POST(req: NextRequest) {
-    const { userId, address, amount } = await req.json();
+    const { userId, address, amount, cnyAmount } = await req.json();
+    if (Number(cnyAmount) < 0 || Number(amount < 0)) {
+        return NextResponse.json({ error: "price error" }, { status: 400 });
+    }
 
     if (!amount) {
         return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
     }
 
     const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000); // 10分钟后过期
-    const order = await Order.create({ userId, amount, address, expiresAt });
+    const order = await Order.create({ userId, amount, cnyAmount, address, expiresAt });
 
 
 
@@ -87,3 +90,4 @@ export async function PATCH(req: NextRequest) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
+

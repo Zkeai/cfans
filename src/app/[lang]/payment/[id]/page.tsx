@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useHeaderStore } from "@/utils/store/header";
 import {
   Card,
   Typography,
@@ -12,6 +13,7 @@ import {
 } from "@douyinfe/semi-ui";
 import { IconCopy } from "@douyinfe/semi-icons";
 import { QRCodeSVG } from "qrcode.react";
+import { useSession } from "next-auth/react";
 
 type Order = {
   id: string;
@@ -34,6 +36,9 @@ export default function PaymentPage() {
   const [selectedChain, setSelectedChain] = useState<string | null>(null);
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
   const [addressConfig, setAddressConfig] = useState<Config | null>(null);
+  const { data } = useSession();
+
+  const user = useHeaderStore((state: any) => state.user) || data?.user;
 
   const router = useRouter();
   const params = useParams();
@@ -82,6 +87,31 @@ export default function PaymentPage() {
   }, [orderId]);
 
   useEffect(() => {
+    if (status === "success") {
+      const changeCny = async () => {
+        const res = await fetch("/api/cny", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: orderId,
+          }),
+        });
+        const data = await res.json();
+
+        await fetch("/api/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user?.id,
+            operation: "add",
+            amount: data.cnyAmount,
+          }),
+        });
+      };
+      changeCny();
+      return;
+    }
+
     if (status !== "pending" || timeLeft <= 0) return;
 
     const timer = setInterval(() => {
@@ -192,7 +222,11 @@ export default function PaymentPage() {
               {formatTime(timeLeft)}
             </Typography.Title>
             <Typography.Text type="secondary">
-              {timeLeft > 0 ? "请在规定时间内完成支付。" : "支付已过期。"}
+              {status === "pending"
+                ? "请在规定时间内完成订单。"
+                : status === "success"
+                ? "订单已完成"
+                : "订单已过期。"}
             </Typography.Text>
           </div>
         </div>
@@ -246,14 +280,20 @@ export default function PaymentPage() {
                 type={status === "pending" ? "warning" : "danger"}
                 strong
               >
-                {status === "pending" ? "等待支付" : status}
+                {status === "pending"
+                  ? "等待支付"
+                  : status === "success"
+                  ? "支付成功"
+                  : "支付过期"}
               </Typography.Text>
             </div>
           </div>
         )}
 
         {/* 返回按钮 */}
-        {(status === "expired" || status === "failed") && (
+        {(status === "expired" ||
+          status === "failed" ||
+          status === "success") && (
           <div style={{ marginTop: 24, textAlign: "center" }}>
             <Button
               type="primary"

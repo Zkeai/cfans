@@ -58,7 +58,7 @@ const register = async (formdata: FormData) => {
     if (existingUser) return { success: false, message: "use already exists(用户已存在)" }
 
     const hashedPassword = await hash(password, 12)
-    await User.create({ firstName, lastName, email, password: hashedPassword })
+    await User.create({ firstName, lastName, email, balance: 0, password: hashedPassword })
 
     redirect('/login')
 

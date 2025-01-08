@@ -42,17 +42,31 @@ export default function Home() {
 
   // 处理 RMB 输入变化
   const handleRmbChange = (value: any) => {
+    const numericValue = parseFloat(value); // 将输入转换为数字
+    if (numericValue <= 0 || isNaN(numericValue)) {
+      setRmbValue("");
+      setUsdtValue("");
+      return;
+    }
+
     setRmbValue(value);
     if (averagePrice) {
-      setUsdtValue((value / averagePrice).toFixed(2));
+      setUsdtValue((numericValue / averagePrice).toFixed(2));
     }
   };
 
   // 处理 USDT 输入变化
   const handleUsdtChange = (value: any) => {
+    const numericValue = parseFloat(value); // 将输入转换为数字
+    if (numericValue <= 0 || isNaN(numericValue)) {
+      setUsdtValue("");
+      setRmbValue("");
+      return;
+    }
+
     setUsdtValue(value);
     if (averagePrice) {
-      setRmbValue((value * averagePrice).toFixed(2));
+      setRmbValue((numericValue * averagePrice).toFixed(2));
     }
   };
 
@@ -69,6 +83,7 @@ export default function Home() {
         userId: id,
         address: "0x0000000000000000000000000000000000000000",
         amount: usdtValue,
+        cnyAmount: rmbValue,
       }),
     });
 
@@ -76,7 +91,7 @@ export default function Home() {
     console.log(orderId);
 
     if (!orderId) {
-      alert("订单创建失败");
+      Toast.error("订单创建失败");
       return;
     }
 
