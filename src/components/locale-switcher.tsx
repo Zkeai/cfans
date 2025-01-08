@@ -5,7 +5,7 @@ import { i18n } from "@/i18n-config";
 import { useEffect, useState } from "react";
 import { Button, Dropdown } from "@douyinfe/semi-ui";
 import { IconLanguage } from "@douyinfe/semi-icons";
-import { useTranslationStore } from "@/store/translation";
+import { useTranslationStore } from "@/utils/store/translation";
 
 export default function LocaleSwitcher() {
   const pathName = usePathname();

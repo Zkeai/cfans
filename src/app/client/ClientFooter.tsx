@@ -8,6 +8,7 @@ import {
   IconBrandYoutube,
   IconBrandTinderFilled,
 } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 
 interface SocialUrl {
   github: string;
@@ -26,6 +27,12 @@ const socialUrl: SocialUrl = {
 };
 
 const Footer: React.FC<{ content: string }> = ({ content }) => {
+  const pathname = usePathname();
+  const isLoginPage =
+    pathname.includes("/login") ||
+    pathname.includes("/register") ||
+    pathname.includes("/payment");
+  if (isLoginPage) return null;
   const socialClickHandle = (url: string) => {
     window.open(url, "_blank");
   };

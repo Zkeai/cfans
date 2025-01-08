@@ -4,7 +4,6 @@ import connectDB from "@/lib/db";
 import { User } from "@/models/User";
 import { redirect } from "next/navigation";
 import { hash } from 'bcryptjs'
-
 import { signIn } from "@/lib/auth";
 
 
@@ -37,6 +36,7 @@ const register = async (formdata: FormData) => {
     const email = formdata.get("email") as string
     const password = formdata.get("password") as string
 
+
     if (!firstName || !lastName || !email || !password) {
 
         return { success: false, message: "Please fill all fields(请完整填写参数)" };
@@ -63,5 +63,6 @@ const register = async (formdata: FormData) => {
     redirect('/login')
 
 }
+
 
 export { register, login }

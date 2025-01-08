@@ -2,8 +2,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Select, Input, Button, Tag, InputNumber } from "@douyinfe/semi-ui";
 import { getDictionary } from "@/get-dictionary";
-import { useTranslationStore } from "@/store/translation";
-import { title } from "process";
+import { useTranslationStore } from "@/utils/store/translation";
+
 import "@/app/[lang]/dashboard/index.css";
 // 定义服务数据项的接口
 interface ServiceData {

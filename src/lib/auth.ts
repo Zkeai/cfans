@@ -58,6 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             lastName: user.lastName,
             email: user.email,
             role: user.role,
+            banlance: 0,
             id: user._id,
           };
 
@@ -78,27 +79,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   pages: {
     signIn: "/login",
-    error: "/login",
   },
 
   callbacks: {
-    // Handle session object by adding role and user ID
-    async session({ session, token }: { session: any; token: JWT }) {
-      if (token?.sub && token?.role) {
-        session.user.id = token.sub;
-        session.user.role = token.role;
-      }
-      return session;
-    },
+
 
     // Handle JWT token after login
     async jwt({ token, user }: { token: JWT; user: any }) {
       if (user) {
         token.role = user.role;
-        token.sub = user.id;  // Store user ID in token for session management
+        token.sub = user.id;
       }
+
       return token;
     },
+    // Handle session object by adding role and user ID
+    async session({ session, token }: { session: any; token: JWT }) {
+
+      session.user.id = token.sub
+
+      return session;
+    },
+
+
 
     // SignIn callback to handle provider-specific logic (e.g., Google)
     signIn: async ({ user, account }) => {
@@ -115,7 +118,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           if (!alreadyUser) {
             // If the user doesn't exist, create a new one
-            await User.create({ email, name, image, authProviderId: id });
+            await User.create({ email, name, image, authProviderId: id, balance: 0 });
+            return true;
           } else {
             // If the user exists, just return true
             return true;

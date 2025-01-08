@@ -18,7 +18,7 @@ import React, { useState } from "react";
 import { useRouter, usePathname, redirect } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import LocaleSwitcher from "../../components/locale-switcher";
-import { useHeaderStore } from "@/store/header";
+import { useHeaderStore } from "@/utils/store/header";
 
 const ClientHeader = ({
   loginButton,
@@ -40,13 +40,16 @@ const ClientHeader = ({
   const { data } = useSession();
 
   const user = useHeaderStore((state: any) => state.user) || data?.user;
+
   const removeUser = useHeaderStore((state: any) => state.removeUser);
   const pathname = usePathname();
   const router = useRouter();
   const { Header } = Layout;
 
   const isLoginPage =
-    pathname.includes("/login") || pathname.includes("/register");
+    pathname.includes("/login") ||
+    pathname.includes("/register") ||
+    pathname.includes("/payment");
   const [isMoon, setIsMoon] = useState(true);
   const [selectedKey, setSelectedKey] = useState("shop");
 
@@ -103,7 +106,7 @@ const ClientHeader = ({
         <div>
           <div style={{ fontWeight: 600 }}>
             <Space>
-              {user?.email || ""}
+              {user?.id || ""}
               <Tag
                 color="light-blue"
                 prefixIcon={<IconVerify />}

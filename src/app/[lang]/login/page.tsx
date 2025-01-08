@@ -9,7 +9,7 @@ import {
 import { useSession, signIn, getSession } from "next-auth/react"; // 使用 next-auth/react 的 signIn
 import { login } from "@/action/user";
 import { redirect } from "next/navigation";
-import { useHeaderStore } from "@/store/header";
+import { useHeaderStore } from "@/utils/store/header";
 
 const Login = () => {
   const setUser = useHeaderStore((state: any) => state.setUser);
@@ -36,6 +36,7 @@ const Login = () => {
     try {
       const response = await login(formData);
       const session = await getSession();
+
       const user = session?.user;
       setUser(user);
       if (!response?.success) {

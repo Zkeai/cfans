@@ -9,7 +9,7 @@ import {
   changeActiveTab,
   setLanguage,
 } from "@/redux/states/headerSlice";
-import { useTranslationStore } from "@/store/translation";
+import { useTranslationStore } from "@/utils/store/translation";
 import { RootState } from "@/redux/store";
 
 import {

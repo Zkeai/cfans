@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import { getDictionary } from "@/get-dictionary";
 import { SessionProvider } from "next-auth/react";
-import { useTranslationStore } from "@/store/translation";
+import { useTranslationStore } from "@/utils/store/translation";
 const CientHeader = dynamic(() => import("../client/ClientHeader"), {
   ssr: false,
 });

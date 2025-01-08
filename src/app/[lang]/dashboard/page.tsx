@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Space, Button } from "@douyinfe/semi-ui";
 import { useRouter } from "next/navigation";
 import { getDictionary } from "@/get-dictionary";
-import { useTranslationStore } from "@/store/translation";
+import { useTranslationStore } from "@/utils/store/translation";
 
 const Page = () => {
   const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);

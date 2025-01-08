@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     role: { type: String, default: 'user' },
     image: { type: String || undefined },
     authProviderId: { type: String },
-    name: { type: String }
+    name: { type: String },
+    balance: { type: Number }
 })
 
 export const User = mongoose.models?.User || mongoose.model('User', userSchema);
