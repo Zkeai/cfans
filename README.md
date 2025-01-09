@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+<article style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <p align="center"><img width="300" src="./static//favicon.ico" /></p>
+    <h1 style="width: 100%; text-align: center;">Cfans</h1>
+    <p>
+       一款基于next.js的社交媒体服务站。采用链上USDT收款，Telegram接收消息通知及管理订单。
+    </p>
+</article>
+    
+<div align="center">
 
-## Getting Started
+[![LICENSE][license-badge]][license-url]
+[![next.js][next-badge]][next-url]
+[![Bot API][tg-badge]][tg-url]
+[![Semi UI][semi-badge]][semi-url]
+[![ethers][ethers-badge]][ethers-url]
+[![Blog][blog-badge]][blog-url]
+[![Twitter Follow](https://img.shields.io/twitter/follow/Muyu?style=social)](https://twitter.com/muyu_eth)
+[![Youtube](https://img.shields.io/youtube/channel/subscribers/UClhZUsoeyNF5kDZ-OO4y0sw?label=%E6%9C%A8%E9%B1%BC%60muyu)](https://www.youtube.com/channel/UClhZUsoeyNF5kDZ-OO4y0sw)
 
-First, run the development server:
+[next-badge]: https://img.shields.io/badge/next.js-v14.2.15-blue
+[next-url]: https://nextjs.org/
+[tg-badge]: https://img.shields.io/badge/Bot%20API-v.7.4-00aced.svg?style=flat-square&logo=telegram
+[tg-url]: https://core.telegram.org/bots/api
+[semi-badge]: https://img.shields.io/badge/Semi_UI-v2.72.3-blue
+[semi-url]: https://semi.design
+[blog-badge]: https://img.shields.io/badge/Blog-web3-blue
+[blog-url]: https://blog.muyuai.top/
+[ethers-badge]: https://img.shields.io/badge/ethers-v6.13.4-blue
+[ethers-url]: https://github.com/ethers-io/ethers.js
+[license-badge]: https://img.shields.io/npm/l/@douyinfe/semi-ui
+[license-url]: https://github.com/DouyinFE/semi-design/blob/main/LICENSE
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</div>
