@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 interface IShopOrder extends Document {
+    userId: string;
     url: string;
     amount: string;         // 支付金额
     num: Number;
@@ -10,6 +11,7 @@ interface IShopOrder extends Document {
 }
 
 const ShopOrderSchema = new Schema<IShopOrder>({
+    userId: { type: String, required: true },
     url: { type: String, required: true },
     amount: { type: String, required: true },
     num: { type: Number, required: true },

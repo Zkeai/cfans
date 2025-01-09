@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
         // 创建订单
         const createdAt = new Date(Date.now());
-        const order = await ShopOrder.create({ url: link, amount: calculatedPrice, num: quantity, server: selectedService, createdAt });
+        const order = await ShopOrder.create({ userId: userId, url: link, amount: calculatedPrice, num: quantity, server: selectedService, createdAt });
 
         if (!order) {
             return NextResponse.json({ result: "订单失败" }, { status: 200 });

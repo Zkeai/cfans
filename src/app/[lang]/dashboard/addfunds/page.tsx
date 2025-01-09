@@ -152,7 +152,6 @@ export default function Home() {
     });
 
     const { orderId } = await res.json();
-    console.log(orderId);
 
     if (!orderId) {
       Toast.error("订单创建失败");
@@ -167,7 +166,7 @@ export default function Home() {
       {/* 充值说明 Card */}
       <Card
         style={{
-          backgroundColor: "#fef8f5",
+          backgroundColor: "var(--semi-color-shadow)",
           padding: "16px",
           borderRadius: "8px",
         }}
@@ -175,35 +174,59 @@ export default function Home() {
         title={
           <Space>
             <IconAlertTriangle style={{ color: "#f09357", fontSize: "20px" }} />
-            <Title heading={5}>充值说明</Title>
+            <Title heading={5}>
+              <Text type="warning" strong>
+                充值说明
+              </Text>
+            </Title>
           </Space>
         }
       >
         <Space vertical align="start" spacing="medium">
           <Text>
             <Tag color="orange" style={{ marginRight: "8px" }}>
-              重要
+              <Text type="danger" strong>
+                重要
+              </Text>
             </Tag>
-            先决定充值多少 <Text strong>RMB</Text>
-            ，再根据网站要求的加密货币数量转账。
+            <Text type="success">
+              先决定充值多少{" "}
+              <Text type="warning" strong>
+                RMB
+              </Text>
+              ，再根据网站要求的加密货币数量转账。
+            </Text>
           </Text>
           <Divider margin="12px 0" />
-          <Text type="danger" strong>
+          <Text type="success" strong>
             不要自行决定发送多少 USDT，网站不会为你多付的加密货币而转化成余额。
           </Text>
           <Divider margin="12px 0" />
-          <Text>
-            转账 <Text strong>手续费自付</Text>，不要忽略小数点后的数，到账数{" "}
-            <Text strong>不能少于</Text> 网站要求数量。
+          <Text type="success">
+            转账{" "}
+            <Text strong type="warning">
+              手续费自付
+            </Text>
+            ，不要忽略小数点后的数，到账数{" "}
+            <Text strong type="warning">
+              不能少于
+            </Text>{" "}
+            网站要求数量。
           </Text>
           <Divider margin="12px 0" />
           <Text type="warning" strong>
-            仔细核对转账的链以及币种，<Text strong>转错链无法正常到账</Text>
+            仔细核对转账的链以及币种，
+            <Text strong type="warning">
+              转错链无法正常到账
+            </Text>
             ，需自行承担损失。
           </Text>
           <Divider margin="12px 0" />
-          <Text>
-            <Text strong>充值转账时间有限</Text>，需在网站提示的时间内到账。
+          <Text type="success">
+            <Text strong type="warning">
+              充值转账时间有限
+            </Text>
+            ，需在网站提示的时间内到账。
             <br />
             超时到账不会自动充值，需联系人工处理。
           </Text>
