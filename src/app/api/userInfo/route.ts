@@ -9,16 +9,11 @@ export async function POST(req: NextRequest) {
     connectDB()
     try {
         // 从请求体中解析参数
-        const { userId, amount, operation } = await req.json();
+        const { userId } = await req.json();
 
         // 检查必需参数是否存在
-        if (!userId || amount == null || !operation) {
+        if (!userId) {
             return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
-        }
-
-        // 判断操作类型是否有效
-        if (!['add', 'sub'].includes(operation)) {
-            return NextResponse.json({ error: "Invalid operation" }, { status: 400 });
         }
 
         // 判断 userId 类型
@@ -39,25 +34,11 @@ export async function POST(req: NextRequest) {
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
-
-        // 根据操作类型更新余额
-        if (operation === 'add') {
-            user.balance = parseFloat((Number(user.balance || 0) + Number(amount)).toFixed(2));
-        } else if (operation === 'subtract') {
-            // 检查余额是否足够
-            if (Number((user.balance || 0)) < Number(amount)) {
-                return NextResponse.json({ error: "Insufficient balance" }, { status: 400 });
-            }
-            user.balance = parseFloat((Number(user.balance || 0) - Number(amount)).toFixed(2));
-        }
-
-        // 保存更改
-        await user.save();
-
+        user.password = ""
         // 返回成功响应
-        return NextResponse.json({ result: "success", balance: user.balance });
+        return NextResponse.json({ result: "success", userInfo: user });
     } catch (error) {
-        console.error("Error updating balance:", error);
+        console.error("Error", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

@@ -8,21 +8,30 @@ import {
   Tag,
   Button,
   Toast,
+  Table,
+  Pagination,
 } from "@douyinfe/semi-ui";
 import { useState, useEffect } from "react";
 import { IconInfoCircle, IconAlertTriangle } from "@douyinfe/semi-icons";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useHeaderStore } from "@/utils/store/header";
 
 const { Title, Text } = Typography;
 
 export default function Home() {
   const [averagePrice, setAveragePrice] = useState(7.52); // 汇率
   const router = useRouter();
-  const [rmbValue, setRmbValue] = useState(""); // 左侧输入框 RMB 值
-  const [usdtValue, setUsdtValue] = useState(""); // 右侧输入框 USDT 值
+  const [rmbValue, setRmbValue] = useState("");
+  const [usdtValue, setUsdtValue] = useState("");
+  const [orderList, setOrderList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const { data } = useSession();
-  const id = data?.user?.id;
+  const user = useHeaderStore((state: any) => state.user) || data?.user;
+  const id = user?.id;
+
   useEffect(() => {
     async function fetchAveragePrice() {
       try {
@@ -32,14 +41,69 @@ export default function Home() {
         }
         const result = await response.json();
         setAveragePrice(result.averagePrice.toFixed(2)); // 设置实时汇率
-      } catch (err: any) {
-        console.log(err.message);
-      }
+      } catch (error) {}
     }
-
+    async function getOrderList() {
+      try {
+        const res = await fetch("/api/rechargeOrder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: id,
+          }),
+        });
+        const data = await res.json();
+        setOrderList(data.orders || []);
+      } catch (error) {}
+    }
+    getOrderList();
     fetchAveragePrice();
-  }, []);
+  }, [id]);
 
+  const renderStatus = (status: string) => {
+    const statusMap: Record<string, string> = {
+      success: "订单完成",
+      failed: "订单失败",
+      expired: "订单过期",
+      pending: "等待完成",
+    };
+    return statusMap[status] || "未知状态";
+  };
+
+  const columns = [
+    {
+      title: "索引",
+      dataIndex: "index",
+      render: (_: any, __: any, index: number) =>
+        (currentPage - 1) * pageSize + index + 1,
+    },
+    {
+      title: "订单ID",
+      dataIndex: "_id",
+    },
+    {
+      title: "状态",
+      dataIndex: "status",
+      render: (status: string) => renderStatus(status),
+    },
+    {
+      title: "创建时间",
+      dataIndex: "createdAt",
+      render: (createdAt: string) => new Date(createdAt).toLocaleString(),
+    },
+    {
+      title: "金额 (USDT)",
+      dataIndex: "amount",
+    },
+  ];
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to the first page when page size changes
+  };
   // 处理 RMB 输入变化
   const handleRmbChange = (value: any) => {
     const numericValue = parseFloat(value); // 将输入转换为数字
@@ -145,7 +209,7 @@ export default function Home() {
           </Text>
         </Space>
       </Card>
-
+      <br />
       {/* 汇率转换 Card */}
       <Card
         style={{
@@ -191,6 +255,38 @@ export default function Home() {
             充值
           </Button>
         </Space>
+      </Card>
+      <br />
+      {/* 历史订单 orderList */}
+      <Card
+        title={
+          <Space>
+            <Title heading={5} style={{ margin: 0 }}>
+              历史订单
+            </Title>
+          </Space>
+        }
+        bodyStyle={{ padding: "16px" }}
+        style={{ borderRadius: "8px", marginTop: "16px" }}
+      >
+        <Table
+          columns={columns}
+          dataSource={orderList.slice(
+            (currentPage - 1) * pageSize,
+            currentPage * pageSize
+          )} // 分页数据
+          pagination={false} // Disable Table's built-in pagination
+          rowKey="_id"
+        />
+        <Pagination
+          total={orderList.length}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+          pageSizeOpts={[5, 10, 20, 50]}
+          style={{ marginTop: "16px", textAlign: "right" }}
+        />
       </Card>
     </div>
   );

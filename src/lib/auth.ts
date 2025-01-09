@@ -25,8 +25,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Authorization logic for credentials-based login
       authorize: async (credentials) => {
         try {
-          // const email = credentials?.email as string
-          // const password = credentials?.password as string
 
           // Parse credentials using Zod schema
           const { email, password } = await signInSchema.parseAsync(credentials);
@@ -85,10 +83,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 
     // Handle JWT token after login
-    async jwt({ token, user }: { token: JWT; user: any }) {
-      if (user) {
+    async jwt({ token, user, account }: { token: JWT; user: any; account: any }) {
+
+
+      if (user && account) {
         token.role = user.role;
-        token.sub = user.id;
+        token.sub = account.providerAccountId;
       }
 
       return token;
@@ -105,20 +105,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     // SignIn callback to handle provider-specific logic (e.g., Google)
     signIn: async ({ user, account }) => {
+
       if (account?.provider === "google" || account?.provider === "github" || account?.provider === "twitter") {
         try {
           let { email } = user;
-          const { name, image, id } = user
-
+          const { name, image } = user
+          const { providerAccountId } = account
           if (email === undefined) {
             email = `${name}@cfans.com`
           }
           await connectDB();
-          const alreadyUser = await User.findOne({ email });
+          const alreadyUser = await User.findOne({ authProviderId: account.providerAccountId });
 
           if (!alreadyUser) {
             // If the user doesn't exist, create a new one
-            await User.create({ email, name, image, authProviderId: id, balance: 0 });
+            await User.create({ email, name, image, authProviderId: providerAccountId, balance: 0 });
             return true;
           } else {
             // If the user exists, just return true

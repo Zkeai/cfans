@@ -55,7 +55,7 @@ const register = async (formdata: FormData) => {
 
     // existing user
     const existingUser = await User.findOne({ email });
-    if (existingUser) return { success: false, message: "use already exists(用户已存在)" }
+    if (existingUser) return { success: false, message: "email already exists(邮箱已存在)" }
 
     const hashedPassword = await hash(password, 12)
     await User.create({ firstName, lastName, email, balance: 0, password: hashedPassword })

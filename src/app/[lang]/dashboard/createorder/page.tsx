@@ -1,10 +1,18 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
-import { Select, Input, Button, Tag, InputNumber } from "@douyinfe/semi-ui";
+import {
+  Select,
+  Input,
+  Button,
+  Tag,
+  InputNumber,
+  Toast,
+} from "@douyinfe/semi-ui";
 import { getDictionary } from "@/get-dictionary";
 import { useTranslationStore } from "@/utils/store/translation";
 
 import "@/app/[lang]/dashboard/index.css";
+import { useSession } from "next-auth/react";
 // 定义服务数据项的接口
 interface ServiceData {
   service: string;
@@ -59,6 +67,10 @@ const CreateOrder = () => {
   const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);
   const lang = useTranslationStore((state) => state.lang);
 
+  const { data } = useSession();
+  const user = data?.user;
+  const id = user?.id;
+
   // 加载翻译词典
   useEffect(() => {
     const loadDictionary = async () => {
@@ -90,9 +102,31 @@ const CreateOrder = () => {
   // 动态计算价格
   const calculatedPrice = useMemo(() => {
     if (!selectedServiceDetails || quantity === 0) return 0;
-    return (selectedServiceDetails.rate / 1000) * quantity;
+    return parseFloat(
+      ((selectedServiceDetails.rate / 1000) * quantity).toFixed(2)
+    );
   }, [selectedServiceDetails, quantity]);
 
+  //提交订单
+  const submitCreateOrder = async () => {
+    const res = await fetch("/api/createShopOrder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        selectedService,
+        link,
+        quantity,
+        calculatedPrice,
+        userId: id,
+      }),
+    });
+    const data = await res.json();
+    if (data.result === "success") {
+      Toast.success("下单成功");
+    } else {
+      Toast.error(data.result);
+    }
+  };
   return (
     <div className="container ">
       <title>
@@ -236,13 +270,7 @@ const CreateOrder = () => {
         {/* 提交按钮 */}
         <Button
           type="primary"
-          onClick={() => {
-            console.log("分类:", selectedCategory);
-            console.log("服务:", selectedService);
-            console.log("链接:", link);
-            console.log("数量:", quantity);
-            console.log("价格:", calculatedPrice);
-          }}
+          onClick={submitCreateOrder}
           disabled={
             !selectedCategory || !selectedService || !link || quantity === 0
           }

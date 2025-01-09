@@ -13,8 +13,9 @@ import {
   IconMoon,
   IconSun,
   IconVerify,
+  IconCoinMoneyStroked,
 } from "@douyinfe/semi-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, usePathname, redirect } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import LocaleSwitcher from "../../components/locale-switcher";
@@ -52,7 +53,7 @@ const ClientHeader = ({
     pathname.includes("/payment");
   const [isMoon, setIsMoon] = useState(true);
   const [selectedKey, setSelectedKey] = useState("shop");
-
+  const [userInfos, setUserInfos] = useState<any>();
   const toggleIcon = () => {
     const body = document.body;
     if (body.hasAttribute("theme-mode")) {
@@ -68,6 +69,26 @@ const ClientHeader = ({
     { key: "order", label: order, path: `/${local}/dashboard/order` },
     { key: "doc", label: doc, path: `/${local}/doc` },
   ];
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const res = await fetch("/api/userInfo", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user?.id,
+          }),
+        });
+        const data = await res.json();
+
+        if (data?.userInfo) {
+          setUserInfos(data.userInfo);
+        }
+      } catch (error) {}
+    };
+    if (user) getUserInfo();
+  }, [user]);
 
   const handleClick = (key: string, path: string) => {
     setSelectedKey(key);
@@ -106,7 +127,9 @@ const ClientHeader = ({
         <div>
           <div style={{ fontWeight: 600 }}>
             <Space>
-              {user?.id || ""}
+              {userInfos?.name
+                ? userInfos?.name
+                : `${userInfos?.lastName}${userInfos?.firstName}`}
               <Tag
                 color="light-blue"
                 prefixIcon={<IconVerify />}
@@ -114,7 +137,16 @@ const ClientHeader = ({
                 shape="circle"
                 type="solid"
               >
-                {user?.role}
+                {userInfos?.role}
+              </Tag>
+              <Tag
+                color="light-blue"
+                prefixIcon={<IconCoinMoneyStroked />}
+                size="large"
+                type="solid"
+                shape="circle"
+              >
+                {`${userInfos?.balance}`}
               </Tag>
             </Space>
           </div>
