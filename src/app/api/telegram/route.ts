@@ -4,7 +4,7 @@ import { handleUpdate, setupWebhook } from '@/lib/telegram';
 export async function POST(req: Request) {
     try {
         const update = await req.json();
-        console.log('📩 收到消息:', update);
+        //console.log('📩 收到消息:', update);
 
         // 处理 Telegram 更新
         await handleUpdate(update);

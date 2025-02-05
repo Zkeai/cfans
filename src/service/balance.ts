@@ -46,3 +46,33 @@ export async function SetBalance(data: IBalance) {
         return "修改失败"
     }
 }
+
+export async function Getbalance(userId: string) {
+    await connectDB()
+    try {
+
+        // 判断 userId 类型
+        let query;
+        if (userId.length !== 24) {
+            // authProviderId 格式检查
+            query = { authProviderId: userId };
+        } else {
+            // _id 格式检查
+            query = { _id: userId };
+        }
+
+        // 查找用户
+        const user = await User.findOne(query);
+
+        if (!user) {
+            return "用户不存在"
+        }
+
+
+
+        return user.balance
+
+    } catch (error) {
+        return "修改失败"
+    }
+}

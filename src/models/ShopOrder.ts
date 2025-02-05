@@ -4,8 +4,8 @@ interface IShopOrder extends Document {
     userId: string;
     url: string;
     amount: string;         // 支付金额
-    num: Number;
-    server: String;
+    num: number;
+    server: string;
     status: "pending" | "success" | "stop" | "reimburse" | "aftersales"; // 状态
     createdAt: Date;        // 创建时间
 }
