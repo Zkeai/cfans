@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import connectDB from "@/lib/db";
 
 import { User } from "@/models/User";
@@ -41,6 +42,7 @@ export async function SetBalance(data: IBalance) {
 
         // 保存更改
         await user.save();
+
 
     } catch (error) {
         return "修改失败"

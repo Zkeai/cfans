@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Nav } from "@douyinfe/semi-ui";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTab,
@@ -11,19 +11,24 @@ import {
 } from "@/redux/states/headerSlice";
 import { useTranslationStore } from "@/utils/store/translation";
 import { RootState } from "@/redux/store";
+import { useHeaderStore } from "@/utils/store/header";
 
 import {
   IconHome,
   IconShoppingCart,
   IconShoppingBag,
   IconCreditCardPay,
+  IconSettings,
 } from "@tabler/icons-react";
 import { getDictionary } from "@/get-dictionary";
+import { useSession } from "next-auth/react";
 
 const NavNode: React.FC = () => {
+  const { data } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const user = useHeaderStore((state: any) => state.user) || data?.user;
+  const [userInfos, setUserInfos] = useState<any>();
   const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);
   const activeTab = useSelector((state: RootState) => state.header.activeTab);
   const tabsData = useSelector((state: RootState) => state.header.tabsData);
@@ -83,6 +88,28 @@ const NavNode: React.FC = () => {
     loadDictionary();
   }, [lang]);
 
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const res = await fetch("/api/userInfo", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user?.id,
+          }),
+        });
+        const data = await res.json();
+
+        if (data?.userInfo) {
+          setUserInfos(data.userInfo);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user) getUserInfo();
+  }, [user]);
+
   return (
     <Nav mode="vertical" onSelect={handleSelect} selectedKeys={[activeTab]}>
       <Nav.Item
@@ -111,6 +138,22 @@ const NavNode: React.FC = () => {
           <IconCreditCardPay style={{ color: "var(--semi-color-warning)" }} />
         }
       />
+      {userInfos?.role === "admin" ? (
+        <Nav.Sub
+          itemKey={"admin"}
+          text={t("admin")}
+          icon={
+            <IconSettings
+              style={{ color: "var(--semi-color-warning)", height: "24px" }}
+            />
+          }
+        >
+          <Nav.Item itemKey={"active"} text={"活跃用户"} />
+          <Nav.Item itemKey={"negative"} text={"非活跃用户"} />
+        </Nav.Sub>
+      ) : (
+        ""
+      )}
       <Nav.Footer collapseButton={true} />
     </Nav>
   );
