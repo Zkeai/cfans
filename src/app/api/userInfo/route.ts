@@ -6,7 +6,7 @@ import { User } from "@/models/User";
 
 
 export async function POST(req: NextRequest) {
-    connectDB()
+    await connectDB()
     try {
         // 从请求体中解析参数
         const { userId } = await req.json();

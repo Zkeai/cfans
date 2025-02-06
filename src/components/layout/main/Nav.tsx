@@ -148,8 +148,9 @@ const NavNode: React.FC = () => {
             />
           }
         >
-          <Nav.Item itemKey={"active"} text={"活跃用户"} />
-          <Nav.Item itemKey={"negative"} text={"非活跃用户"} />
+          <Nav.Item itemKey={"adminUser"} text={t("adminUser")} />
+          <Nav.Item itemKey={"adminProduct"} text={t("adminProduct")} />
+          <Nav.Item itemKey={"adminTG"} text={t("adminTG")} />
         </Nav.Sub>
       ) : (
         ""

@@ -1,6 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { SearchShopOrder, SetShopOrderStatus } from '@/service/shopOrder'
-import { Getbalance, SetBalance } from '@/service/balance'
+import { Getbalance, SetBalance } from '@/service/user'
 const botToken = process.env.TELEGRAM_BOT_TOKEN || '';
 const bot = new TelegramBot(botToken, { polling: false });
 
