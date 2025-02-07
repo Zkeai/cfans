@@ -23,18 +23,13 @@ const Page = () => {
 
     loadDictionary();
   }, [lang]);
-  // useEffect(() => {
-  //   // 仅在浏览器端运行时初始化
-  //   fetch("/api/telegram-webhook")
-  //     .then(() => console.log("✅ Webhook 已触发"))
-  //     .catch((err) => console.error("❌ Webhook 触发失败:", err));
-  // }, []);
+
   const handleButtonClick = () => {
     window.open("https://github.com/Zkeai", "_blank");
   };
 
   const handleButtonClick1 = () => {
-    router.push(`${locale}/dashboard/order`); // 根据语言跳转
+    router.push(`${locale}/dashboard/createorder`); // 根据语言跳转
   };
 
   return (

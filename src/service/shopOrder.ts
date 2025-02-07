@@ -12,7 +12,7 @@ export async function SearchShopOrder(orderId: string) {
 
 export async function SetShopOrderStatus(orderId: string, status: string) {
     await connectDB()
-    console.log("orderId", orderId)
+
     const objectId = new mongoose.Types.ObjectId(orderId);
     const shopOrder = await ShopOrder.findById(objectId)
 

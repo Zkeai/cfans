@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Nav } from "@douyinfe/semi-ui";
+import { Nav, Divider } from "@douyinfe/semi-ui";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -117,6 +117,11 @@ const NavNode: React.FC = () => {
         text={t("home")} // 动态根据语言切换文本
         icon={<IconHome style={{ color: "var(--semi-color-warning)" }} />}
       />
+      <Divider
+        style={{ marginLeft: "5px", width: "180px" }}
+        dashed={true}
+        margin="12px"
+      />
       <Nav.Item
         itemKey={"createorder"}
         text={t("createOrder")}
@@ -138,6 +143,11 @@ const NavNode: React.FC = () => {
           <IconCreditCardPay style={{ color: "var(--semi-color-warning)" }} />
         }
       />
+      <Divider
+        style={{ marginLeft: "5px", width: "180px" }}
+        dashed={true}
+        margin="12px"
+      />
       {userInfos?.role === "admin" ? (
         <Nav.Sub
           itemKey={"admin"}
@@ -150,7 +160,7 @@ const NavNode: React.FC = () => {
         >
           <Nav.Item itemKey={"adminUser"} text={t("adminUser")} />
           <Nav.Item itemKey={"adminProduct"} text={t("adminProduct")} />
-          <Nav.Item itemKey={"adminTG"} text={t("adminTG")} />
+          <Nav.Item itemKey={"telegrame"} text={t("adminTG")} />
         </Nav.Sub>
       ) : (
         ""

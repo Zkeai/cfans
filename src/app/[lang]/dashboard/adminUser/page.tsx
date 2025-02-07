@@ -167,6 +167,11 @@ function UserTable() {
     {
       title: "角色",
       dataIndex: "role",
+      filters: [
+        { text: "管理员", value: "admin" },
+        { text: "用户", value: "user" },
+      ],
+      onFilter: (value: string, record: any) => record.role === value, // Adjusted the condition to check for exact match
       render: (text: "admin" | "user", record: User) => (
         <Select
           value={text}
@@ -181,6 +186,10 @@ function UserTable() {
     {
       title: "余额",
       dataIndex: "balance",
+      sorter: (a: User | undefined, b: User) => {
+        if (!a || !b) return 0;
+        return a.balance - b.balance;
+      },
       render: (text: number, record: User) => {
         return editingRow?.id === record._id ? (
           <InputNumber

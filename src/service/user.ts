@@ -2,7 +2,7 @@
 import connectDB from "@/lib/db";
 
 import { User } from "@/models/User";
-import mongoose from "mongoose";
+
 
 type IBalance = {
     operation: string,
@@ -50,7 +50,6 @@ export async function SetBalance(data: IBalance) {
         return "修改失败"
     }
 }
-
 export async function Getbalance(userId: string) {
     await connectDB()
     try {
@@ -80,7 +79,6 @@ export async function Getbalance(userId: string) {
         return "修改失败"
     }
 }
-
 export async function GetUsers() {
     await connectDB()
 
@@ -92,7 +90,6 @@ export async function GetUsers() {
         console.error(error)
     }
 }
-
 export async function AdminSetRole(userId: string, role: string) {
 
     await connectDB()
@@ -157,8 +154,6 @@ export async function AdminSetBalance(userId: string, balance: string) {
         return "修改失败"
     }
 }
-
-
 export async function AdminDeleteUser(userId: string) {
     try {
         await connectDB();
