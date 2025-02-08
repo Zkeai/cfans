@@ -21,42 +21,8 @@ interface ServiceData {
   min: number;
   max: number;
   rate: number;
+  context: string;
 }
-
-const serviceData: ServiceData[] = [
-  {
-    service: "1517",
-    name: "Twitter - 加密货币相关粉丝｜带0-10推文｜0-1H｜1k+/天｜无售后",
-    category: "Twitter｜X 粉丝(加密货币)｜低掉落｜⚡️正常运行｜较高质量粉丝",
-    min: 100,
-    max: 5000,
-    rate: 50, // 每千个的价格
-  },
-  {
-    service: "1551",
-    name: "Twitter - 加密货币相关粉丝｜带0-10推文｜0-1H｜1k+/天｜♻️售后30天",
-    category: "Twitter｜X 粉丝(加密货币)｜低掉落｜⚡️正常运行｜较高质量粉丝",
-    min: 200,
-    max: 10000,
-    rate: 60,
-  },
-  {
-    service: "1813",
-    name: "⬇️⬇️⬇️下单前必看⬇️⬇️⬇️",
-    category: "Twitter｜X 粉丝｜低掉落",
-    min: 1,
-    max: 1,
-    rate: 0,
-  },
-  {
-    service: "1512",
-    name: "Twitter - NFT粉丝｜速度1k+/天｜0-1H开始｜无售后",
-    category: "Twitter｜X 粉丝｜低掉落",
-    min: 50,
-    max: 3000,
-    rate: 40,
-  },
-];
 
 const CreateOrder = () => {
   const [searchTerm, setSearchTerm] = useState<string>(""); // 搜索框内容
@@ -64,13 +30,14 @@ const CreateOrder = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null); // 选中服务
   const [link, setLink] = useState<string>(""); // 链接
   const [quantity, setQuantity] = useState<number>(0); // 数量
+  const [dataSource, setDataSource] = useState([]);
   const [t, setT] = useState<(key: string) => string>(() => (key: any) => key);
   const lang = useTranslationStore((state) => state.lang);
 
   const { data } = useSession();
   const user = data?.user;
   const id = user?.id;
-
+  const serviceData: ServiceData[] = dataSource;
   // 加载翻译词典
   useEffect(() => {
     const loadDictionary = async () => {
@@ -81,10 +48,23 @@ const CreateOrder = () => {
     loadDictionary();
   }, [lang]);
 
+  const getProduct = async () => {
+    const data = await fetch("/api/getProduct");
+    const productList = await data.json();
+
+    if (productList.success) {
+      console.log(productList);
+      setDataSource(productList.message);
+    }
+  };
+  useEffect(() => {
+    getProduct();
+  }, []);
+
   // 获取分类列表
   const categories = useMemo(() => {
-    return [...new Set(serviceData.map((item) => item.category))];
-  }, []);
+    return Array.from(new Set(serviceData.map((item) => item.category)));
+  }, [serviceData]);
 
   // 实时搜索匹配结果
   const filteredServices = useMemo(() => {
@@ -92,12 +72,12 @@ const CreateOrder = () => {
     return serviceData.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchTerm, serviceData]);
 
   // 获取当前选中服务详情
   const selectedServiceDetails = useMemo<ServiceData | undefined>(() => {
     return serviceData.find((item) => item.service === selectedService);
-  }, [selectedService]);
+  }, [selectedService, serviceData]);
 
   // 动态计算价格
   const calculatedPrice = useMemo(() => {
@@ -129,9 +109,7 @@ const CreateOrder = () => {
   };
   return (
     <div className="container ">
-      <title>
-        {lang === "zh" ? "cfans｜创建新订单" : "cfans｜CreateOrder"}
-      </title>
+      <title>{lang === "zh" ? "创建新订单" : "CreateOrder"}</title>
       <div className="flex flex-col gap-6 p-6 relative basis-2/3">
         {/* 搜索框 */}
         <div className="relative">
