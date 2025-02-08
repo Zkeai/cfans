@@ -22,7 +22,7 @@ export const monitorUSDTTransfer = async (id: string, address: string, amount: s
         // 获取初始余额
         const balanceBefore = await usdtContract.balanceOf(address);
         balanceBeforeBN = BigInt(balanceBefore);
-        console.log("Balance before (raw):", address, balanceBeforeBN);
+
     } catch (error) {
         console.error("Error fetching initial balance:", error);
         throw new Error("Failed to fetch initial balance");

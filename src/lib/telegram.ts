@@ -13,7 +13,6 @@ export async function setupWebhook(webhookUrl: string) {
         await bot.setWebHook(webhookUrl);
         console.log(`✅ Webhook 设置成功: ${webhookUrl}`);
     } catch (error) {
-        console.error('❌ Webhook 设置失败:', error);
         throw error;
     }
 }

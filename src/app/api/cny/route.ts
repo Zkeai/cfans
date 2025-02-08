@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const { orderId } = await req.json();
 
     if (!orderId) {
-        return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
+        return NextResponse.json({ success: false, error: "Missing parameters" }, { status: 400 });
     }
 
 
@@ -17,10 +17,10 @@ export async function POST(req: NextRequest) {
         const order = await Order.findById(orderId);
 
         if (!order) {
-            return NextResponse.json({ error: "Order not found" }, { status: 404 });
+            return NextResponse.json({ success: false, error: "Order not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ cnyAmount: order.cnyAmount }, { status: 200 });
+        return NextResponse.json({ success: true, cnyAmount: order.cnyAmount }, { status: 200 });
     } catch (error) {
         console.error("Error fetching cnyAmount:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

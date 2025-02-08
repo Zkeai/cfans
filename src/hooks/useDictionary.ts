@@ -35,8 +35,6 @@ const useDictionaryByOss = () => {
   const locale = useLocale()
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_I18N_HOSTS) return;
-    console.log('fetch oss')
-    console.log(locale, 'locale')
     const url = `${process.env.NEXT_PUBLIC_I18N_HOSTS}/article/${locale}.json?${Date.now()}`
     fetch(url)
       .then(res => res.json())

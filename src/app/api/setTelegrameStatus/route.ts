@@ -4,9 +4,7 @@ import { SetBotStatus } from '@/service/telegrame';
 export async function POST(req: Request) {
     try {
         const { status } = await req.json();
-        //console.log('📩 收到消息:', update);
 
-        // 处理 Telegram 更新
         const res = await SetBotStatus(status);
 
         return res

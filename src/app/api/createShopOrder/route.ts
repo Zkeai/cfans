@@ -23,15 +23,15 @@ export async function POST(req: NextRequest) {
             // _id 格式检查
             query = { _id: userId };
         } else {
-            return NextResponse.json({ result: "异常订单" }, { status: 200 });
+            return NextResponse.json({ success: false, message: "异常订单" }, { status: 200 });
         }
         const user = await User.findOne(query);
 
         if (!user) {
-            return NextResponse.json({ result: "异常订单" }, { status: 200 });
+            return NextResponse.json({ success: false, message: "异常订单" }, { status: 200 });
         }
         if (Number(user.balance) - Number(calculatedPrice) < 0) {
-            return NextResponse.json({ result: "余额不足" }, { status: 200 });
+            return NextResponse.json({ success: false, message: "余额不足" }, { status: 200 });
         }
 
         // 创建订单
@@ -39,16 +39,16 @@ export async function POST(req: NextRequest) {
         const order = await ShopOrder.create({ userId: userId, url: link, amount: calculatedPrice, num: quantity, server: selectedService, createdAt });
 
         if (!order) {
-            return NextResponse.json({ result: "订单失败" }, { status: 200 });
+            return NextResponse.json({ success: false, message: "订单失败" }, { status: 200 });
         }
         //扣款
         user.balance = parseFloat((Number(user.balance || 0) - Number(calculatedPrice)).toFixed(2));
 
         await user.save();
         // 返回成功响应
-        return NextResponse.json({ result: "success", order: order });
+        return NextResponse.json({ success: false, message: "success", order: order });
     } catch (error) {
         console.error("Error", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
     }
 }

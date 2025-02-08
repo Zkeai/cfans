@@ -51,6 +51,7 @@ export default function PaymentPage() {
 
   const currencies = [{ value: "usdt", label: "USDT" }];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const addressConfigs: { [key: string]: Config } = {
     "ethereum-usdt": {
       address: "0x342a233df1c874f8389fec95a3db04f37694adcc",
@@ -119,7 +120,7 @@ export default function PaymentPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, status]);
+  }, [timeLeft, status, orderId, user?.id]);
 
   useEffect(() => {
     if (status !== "pending") return;
@@ -145,7 +146,7 @@ export default function PaymentPage() {
       const key = `${selectedChain}-${selectedCurrency}`;
       setAddressConfig(addressConfigs[key] || null);
     }
-  }, [selectedChain, selectedCurrency]);
+  }, [addressConfigs, selectedChain, selectedCurrency]);
 
   useEffect(() => {
     const changeAddress = async () => {
@@ -164,8 +165,7 @@ export default function PaymentPage() {
           if (!res.ok) {
             throw new Error("更新地址失败");
           }
-          const result = await res.json();
-          console.log("Address updated:", result);
+          await res.json();
         } catch (error) {
           console.error("Error updating address:", error);
         }

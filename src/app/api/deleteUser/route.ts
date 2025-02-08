@@ -11,10 +11,10 @@ export async function POST(req: NextRequest) {
 
         const res = await AdminDeleteUser(_id)
 
-        return NextResponse.json({ success: true, data: res.message }, { status: 200 });
+        return res
 
 
     } catch (error) {
-        return NextResponse.json({ error: error }, { status: 500 });
+        return NextResponse.json({ success: false, error: error }, { status: 500 });
     }
 }

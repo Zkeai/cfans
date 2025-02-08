@@ -31,7 +31,7 @@ const Telegrame = () => {
         if (!res.ok) throw new Error("请求失败");
         const data = await res.json();
         if (data.result === "查询成功" && data.data?.length > 0) {
-          setChecked(data.data[0].isOpen);
+          setChecked(data.data[0].isOpen === "true");
           setTelegrameId(data.data[0]._id);
           setAdminList(data.data[0].admin);
         }

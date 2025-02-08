@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { i18n, type Locale } from './i18n-config';
 
 const dictionaries = {
@@ -30,7 +31,7 @@ export const getDictionaryByOss = async (locale: Locale) => {
       return await res.json();
     }
   } catch (error) {
-    console.log(error);
+
   }
 
   return;

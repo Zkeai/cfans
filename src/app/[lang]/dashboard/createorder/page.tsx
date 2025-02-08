@@ -53,7 +53,6 @@ const CreateOrder = () => {
     const productList = await data.json();
 
     if (productList.success) {
-      console.log(productList);
       setDataSource(productList.message);
     }
   };
@@ -101,10 +100,10 @@ const CreateOrder = () => {
       }),
     });
     const data = await res.json();
-    if (data.result === "success") {
+    if (data.message === "success") {
       Toast.success("下单成功");
     } else {
-      Toast.error(data.result);
+      Toast.error(data.message);
     }
   };
   return (

@@ -9,8 +9,8 @@ export async function POST() {
 
         const userList = await GetUsers()
 
-        return NextResponse.json({ data: userList }, { status: 200 });
+        return NextResponse.json({ success: false, data: userList }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error: error }, { status: 500 });
+        return NextResponse.json({ success: false, error: error }, { status: 500 });
     }
 }
