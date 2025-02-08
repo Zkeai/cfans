@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Typography, Tag } from "@douyinfe/semi-ui";
+import { Typography } from "@douyinfe/semi-ui";
 
 const { Title, Paragraph, Text } = Typography;
 
