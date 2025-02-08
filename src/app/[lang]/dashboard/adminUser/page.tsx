@@ -186,7 +186,7 @@ function UserTable() {
     {
       title: "余额",
       dataIndex: "balance",
-      sorter: (a: User | undefined, b: User) => {
+      sorter: (a?: User | undefined, b?: User) => {
         if (!a || !b) return 0;
         return a.balance - b.balance;
       },
