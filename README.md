@@ -59,3 +59,21 @@ CFANS
 ```
 
 # 📝 实现思路
+
+<article style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center;">
+
+  <p>支付流程思路<img width="300" src="./static/png/支付流程.png" /></p>
+  <p>导航菜单-面包屑思路<img width="300" src="./static/png/导航菜单.png" /></p>
+  <p><img width="300" src="./static/png/面包屑.png" /></p>
+</div>
+
+</article>
+
+# 🎨 本地调试
+
+```
+npm i
+
+npm run dev
+```
