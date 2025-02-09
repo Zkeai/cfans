@@ -35,6 +35,28 @@
 
 </div>
 
+# 技术栈
+
+## Web2
+
+- React.js
+- Next.js (React 框架)
+- Tailwind CSS (CSS 框架)
+- semi-ui (UI 组件库)
+- echarts (浏览器图表和可视化库)
+- mongodb (数据库)
+- auth.js (登陆认证)
+- redux (状态管理)
+- zustand (状态管理)
+- ...
+
+## Web3
+
+- ethers (以太坊区块链库)
+- bcryptjs (加密库)
+- node-telegram-bot-api (Telegrame API 库)
+- ...
+
 # 🎉 优势
 
 - 🚀 项目是完全开源免费的，完全遵守 MIT 开源协议
@@ -81,3 +103,12 @@ npm i
 
 npm run dev
 ```
+
+# 部署(视频讲解版)
+
+# 预计未来发展
+
+- 🚀 多链多钱包支持，计划增加 trx 以及支付宝、微信等（现因没有企业账号，暂时没对接，后续也可能对接三方个人免支付）
+- 💪 发卡模块，再现基础上其实很容易实现
+- 🌍 支付插件集成(重要程度较低，商业模式需要)
+- 🥳 ...
