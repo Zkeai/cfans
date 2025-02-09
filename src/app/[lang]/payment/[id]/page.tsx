@@ -44,17 +44,27 @@ export default function PaymentPage() {
   const params = useParams();
   const orderId = params.id;
 
-  const chains = [{ value: "bsc", label: "Binance Smart Chain" }];
+  const chains = [
+    { value: "ethereum", label: "Ethereum" },
+    { value: "bsc", label: "Binance Smart Chain" },
+  ];
 
   const currencies = [{ value: "usdt", label: "USDT" }];
-  // todo
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const addressConfigs: { [key: string]: Config } = {
+    "ethereum-usdt": {
+      address: "0x342a233df1c874f8389fec95a3db04f37694adcc",
+      chain: "Ethereum",
+    },
+
     "bsc-usdt": {
-      address: process.env.PAYMENT_ADDRESS as string,
+      address: "0x342a233df1c874f8389fec95a3db04f37694adcc",
       chain: "Binance Smart Chain",
     },
+  };
+  const handleCurrencyChange = (value: string) => {
+    setSelectedCurrency(value);
   };
 
   useEffect(() => {
@@ -67,8 +77,8 @@ export default function PaymentPage() {
         if (!response.ok) throw new Error("无法获取订单详情");
 
         const data = await response.json();
-        setOrder(data);
-        setStatus(data.status);
+        setOrder(data.message);
+        setStatus(data.message.status);
       } catch (err: any) {
         console.error(err.message);
         setError(err.message);
@@ -124,7 +134,7 @@ export default function PaymentPage() {
         if (!response.ok) throw new Error("状态检查失败");
 
         const data = await response.json();
-        setStatus(data.status);
+        setStatus(data.message.status);
       } catch (err: any) {
         console.error(err.message);
       }
@@ -139,7 +149,7 @@ export default function PaymentPage() {
       const key = `${selectedChain}-${selectedCurrency}`;
       setAddressConfig(addressConfigs[key] || null);
     }
-  }, [addressConfigs, selectedChain, selectedCurrency]);
+  }, [selectedChain, selectedCurrency]);
 
   useEffect(() => {
     const changeAddress = async () => {
@@ -235,7 +245,7 @@ export default function PaymentPage() {
           <Select
             placeholder="选择币种"
             style={{ width: "100%" }}
-            onChange={(value: any) => setSelectedCurrency(value)}
+            onChange={handleCurrencyChange}
             optionList={currencies}
           />
         </div>

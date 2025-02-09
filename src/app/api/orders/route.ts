@@ -43,7 +43,7 @@ export async function GET(req: Request) {
             return NextResponse.json({ success: false, error: "Order not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ success: false, message: order }, { status: 200 });
+        return NextResponse.json({ success: true, message: order }, { status: 200 });
     } catch (error) {
         console.error("Error fetching order:", error);
         return NextResponse.json({ success: false, error: "Internal Server Error" }, { status: 500 });
