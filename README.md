@@ -62,12 +62,15 @@ CFANS
 
 ## 链上支付流程
 
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 400; justify-items: start;">
 <img  src="./static/png/支付流程.png" />
+</div>
 
 ## 导航栏&&面包屑
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; justify-items: stretch;">
+<div style="display: grid; grid-template-columns: 24fr 1fr; gap: 40px; width: 400; justify-items: start;">
   <img src="./static/png/导航菜单.png" />
+  </br>
   <img src="./static/png/面包屑.png" />
 </div>
 
