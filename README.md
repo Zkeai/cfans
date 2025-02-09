@@ -41,6 +41,7 @@
 
 - React.js
 - Next.js (React 框架)
+- Serverless (无服务器应用部署)
 - Tailwind CSS (CSS 框架)
 - semi-ui (UI 组件库)
 - echarts (浏览器图表和可视化库)
