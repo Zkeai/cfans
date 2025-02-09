@@ -1,6 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { SearchShopOrder, SetShopOrderStatus } from '@/service/shopOrder'
 import { Getbalance, SetBalance } from '@/service/user'
+import { GetBotStatus } from '@/service/telegrame';
 const botToken = process.env.TELEGRAM_BOT_TOKEN || '';
 const bot = new TelegramBot(botToken, { polling: false });
 
@@ -21,13 +22,23 @@ export async function setupWebhook(webhookUrl: string) {
 export async function handleUpdate(update: any) {
     try {
         if (update.message) {
-            //判断是否是管理员
-
             const chatId = update.message.chat.id;
             const text = update.message.text;
-
-            // 检查用户状态
             const userState = userStates[chatId];
+
+            //判断是否是管理员
+            const fromID = update.message.from.id.toString()
+            const res = await GetBotStatus();
+            const data = await res.json();
+            const adminList = data.data[0].admin
+
+            if (!adminList.includes(fromID)) {
+                await bot.sendMessage(chatId, `你不是管理员哦～`);
+                return
+            }
+
+
+
             if (userState?.step === '等待订单ID') {
                 // 用户输入订单 ID 后的处理
                 await handleOrderIdInput(chatId, text);
