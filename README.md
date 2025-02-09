@@ -60,15 +60,16 @@ CFANS
 
 # 📝 实现思路
 
-<article style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center;">
+## 链上支付流程
 
-  <p>支付流程思路<img width="300" src="./static/png/支付流程.png" /></p>
-  <p>导航菜单-面包屑思路<img width="300" src="./static/png/导航菜单.png" /></p>
-  <p><img width="300" src="./static/png/面包屑.png" /></p>
+<img  src="./static/png/支付流程.png" />
+
+## 导航栏&&面包屑
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; justify-items: stretch;">
+  <img src="./static/png/导航菜单.png" />
+  <img src="./static/png/面包屑.png" />
 </div>
-
-</article>
 
 # 🎨 本地调试
 
