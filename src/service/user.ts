@@ -2,14 +2,11 @@
 import connectDB from "@/lib/db";
 
 import { User } from "@/models/User";
-import { NextResponse } from "next/server";
+import { IBalance } from "@/types/user";
 
 
-type IBalance = {
-    operation: string,
-    userId: string,
-    balance: number
-}
+
+
 export async function SetBalance(data: IBalance) {
     const { userId, operation, balance } = data
     await connectDB()

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import * as echarts from "echarts";
+
 import {
   Table,
   Avatar,
@@ -10,13 +12,13 @@ import {
   Select,
   InputNumber,
   Notification,
+  Card,
 } from "@douyinfe/semi-ui";
 import { IconDelete, IconUser, IconMail } from "@douyinfe/semi-icons";
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from "@douyinfe/semi-illustrations";
-
 const { Text } = Typography;
 
 type User = {
@@ -27,7 +29,6 @@ type User = {
   image?: string;
   balance: number;
 };
-
 type ApiResponse = {
   data: User[];
 };
@@ -40,6 +41,8 @@ function UserTable() {
     id: string;
     value: number;
   } | null>(null);
+  const roleChartRef = useRef(null);
+  const balanceChartRef = useRef(null);
 
   useEffect(() => {
     const getUsersList = async () => {
@@ -66,6 +69,94 @@ function UserTable() {
 
     getUsersList();
   }, []);
+
+  useEffect(() => {
+    if (roleChartRef.current) {
+      const chartInstance = echarts.init(roleChartRef.current);
+      const adminCount = dataSource.filter(
+        (user) => user.role === "admin"
+      ).length;
+      const userCount = dataSource.filter(
+        (user) => user.role === "user"
+      ).length;
+
+      chartInstance.setOption({
+        title: {
+          text: "用户角色分布",
+          left: "center",
+          textStyle: { fontSize: 14 },
+        },
+        tooltip: { trigger: "item" },
+        legend: { bottom: "5%" },
+        series: [
+          {
+            name: "用户角色",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            label: { show: false },
+            data: [
+              {
+                value: adminCount,
+                name: "管理员",
+                itemStyle: { color: "#ff4d4f" },
+              },
+              {
+                value: userCount,
+                name: "普通用户",
+                itemStyle: { color: "#1890ff" },
+              },
+            ],
+          },
+        ],
+      });
+
+      return () => chartInstance.dispose();
+    }
+  }, [dataSource]);
+
+  useEffect(() => {
+    if (balanceChartRef.current) {
+      const chartInstance = echarts.init(balanceChartRef.current);
+      const rechargedUsers = dataSource.filter(
+        (user) => user.balance > 0
+      ).length;
+      const notRechargedUsers = dataSource.length - rechargedUsers;
+
+      chartInstance.setOption({
+        title: {
+          text: "充值状态分布",
+          left: "center",
+          textStyle: { fontSize: 14 },
+        },
+        tooltip: { trigger: "item" },
+        legend: { bottom: "5%" },
+        series: [
+          {
+            name: "充值状态",
+            type: "pie",
+            radius: ["40%", "70%"],
+            avoidLabelOverlap: false,
+            label: { show: false },
+            data: [
+              {
+                value: rechargedUsers,
+                name: "已充值",
+                itemStyle: { color: "#52c41a" },
+              },
+              {
+                value: notRechargedUsers,
+                name: "未充值",
+                itemStyle: { color: "#d9d9d9" },
+              },
+            ],
+          },
+        ],
+      });
+
+      return () => chartInstance.dispose();
+    }
+  }, [dataSource]);
 
   const updateUserData = async (id: string, field: string, value: any) => {
     try {
@@ -248,19 +339,31 @@ function UserTable() {
   );
 
   return (
-    <div className="gap-6 p-6">
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        loading={loading}
-        pagination={{
-          pageSize: pageSize,
-          showSizeChanger: true,
-          pageSizeOpts: [5, 10, 20, 50, 100],
-          onPageSizeChange: (size) => setPageSize(size),
-        }}
-        empty={empty}
-      />
+    <div className="p-6 space-y-6">
+      {/* 图表展示部分 */}
+      <div className="grid grid-cols-2 gap-6">
+        <Card title="用户角色统计" className="p-4">
+          <div style={{ width: "100%", height: 250 }} ref={roleChartRef} />
+        </Card>
+        <Card title="充值状态统计" className="p-4">
+          <div style={{ width: "100%", height: 250 }} ref={balanceChartRef} />
+        </Card>
+      </div>
+      {/* 用户表格 */}
+      <Card title="用户列表" className="p-4">
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          loading={loading}
+          pagination={{
+            pageSize: pageSize,
+            showSizeChanger: true,
+            pageSizeOpts: [5, 10, 20, 50, 100],
+            onPageSizeChange: (size) => setPageSize(size),
+          }}
+          empty={empty}
+        />
+      </Card>
     </div>
   );
 }

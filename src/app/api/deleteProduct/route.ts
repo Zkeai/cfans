@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { DeleteProduct } from '@/service/product';
 
-export async function POST(req: Request) {
+export async function DELETE(req: Request) {
     try {
-        const { id } = await req.json();
+        const col = await req.json();
 
         // 处理 Telegram 更新
-        const res = await DeleteProduct(id);
+        const res = await DeleteProduct(col);
 
         return res
     } catch (error) {

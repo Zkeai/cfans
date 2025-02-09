@@ -9,7 +9,6 @@ import {
   Button,
   Table,
   Card,
-  Divider,
 } from "@douyinfe/semi-ui";
 
 const Telegrame = () => {
@@ -115,7 +114,7 @@ const Telegrame = () => {
   if (!mounted) return null; // 避免 SSR 时报错
 
   return (
-    <div className="p-6 px-52 max-w-6xl">
+    <div className="space-y-6 p-6 px-52 max-w-6xl">
       {/* 机器人状态管理 */}
       <Card title="TGBot 状态管理" className="mb-6">
         <Space align="center">
@@ -128,9 +127,6 @@ const Telegrame = () => {
           />
         </Space>
       </Card>
-
-      {/* 分割线 */}
-      <Divider />
 
       {/* 管理员管理 */}
       <Card title="管理员管理">
