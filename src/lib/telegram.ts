@@ -21,6 +21,8 @@ export async function setupWebhook(webhookUrl: string) {
 export async function handleUpdate(update: any) {
     try {
         if (update.message) {
+            //判断是否是管理员
+
             const chatId = update.message.chat.id;
             const text = update.message.text;
 

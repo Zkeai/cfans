@@ -44,22 +44,15 @@ export default function PaymentPage() {
   const params = useParams();
   const orderId = params.id;
 
-  const chains = [
-    { value: "ethereum", label: "Ethereum" },
-    { value: "bsc", label: "Binance Smart Chain" },
-  ];
+  const chains = [{ value: "bsc", label: "Binance Smart Chain" }];
 
   const currencies = [{ value: "usdt", label: "USDT" }];
+  // todo
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const addressConfigs: { [key: string]: Config } = {
-    "ethereum-usdt": {
-      address: "0x342a233df1c874f8389fec95a3db04f37694adcc",
-      chain: "Ethereum",
-    },
-
     "bsc-usdt": {
-      address: "0x342a233df1c874f8389fec95a3db04f37694adcc",
+      address: process.env.PAYMENT_ADDRESS as string,
       chain: "Binance Smart Chain",
     },
   };
