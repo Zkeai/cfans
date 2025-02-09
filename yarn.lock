@@ -104,34 +104,34 @@
   dependencies:
     tslib "^2.0.0"
 
-"@douyinfe/semi-animation-react@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-animation-react/-/semi-animation-react-2.71.1.tgz"
-  integrity sha512-GlDnIRAqT55nuFbgs9pRL826QSNFOhhdYT1mB9sdvkdhCm3CEwTAyWkTgAp7SpeDu57yWNFg5auejMsA0FnMWw==
+"@douyinfe/semi-animation-react@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-animation-react/-/semi-animation-react-2.74.0.tgz"
+  integrity sha512-SY8BEUEWry6zJnFjrTUgIxr+e7hfBi6tx84yfPZRRXi+gN6p06bQboJLYjqAjoTLBvo0cUc/Pj+TfpIyhunkEw==
   dependencies:
-    "@douyinfe/semi-animation" "2.71.1"
-    "@douyinfe/semi-animation-styled" "2.71.1"
+    "@douyinfe/semi-animation" "2.74.0"
+    "@douyinfe/semi-animation-styled" "2.74.0"
     classnames "^2.2.6"
 
-"@douyinfe/semi-animation-styled@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-animation-styled/-/semi-animation-styled-2.71.1.tgz"
-  integrity sha512-NvlIgAsihTca2MVPY/NzOXDxRq2ajymWp5e+d3V2+iVTMzbEpKMFLDlSS0LA2Jj5wgR5YAGaqCqMKvohYXWBpw==
+"@douyinfe/semi-animation-styled@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-animation-styled/-/semi-animation-styled-2.74.0.tgz"
+  integrity sha512-FfcWtbk1nCemvk7i9SMlFTLgXvFQmCXCKslE/CL6cu9JM23a4R2FnHUPReYjnoTX/aIzfYKcZVxOYpE1u79/Xg==
 
-"@douyinfe/semi-animation@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-animation/-/semi-animation-2.71.1.tgz"
-  integrity sha512-1uf+KfDjk76ufN0mf2hCCg3ZE86RD1R2zNdZaV0OCBtlUSkZf18cjS3SiHLludR1Rs83qbzzKaeFnjFenPG9Xg==
+"@douyinfe/semi-animation@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-animation/-/semi-animation-2.74.0.tgz"
+  integrity sha512-S0n5d928HClJfglsfk1IjiYWGYYxhxWordKZU23JoAH9/PpordvmbzsC+6iBe9eCsDJClVoj1fOyzOYhOOdoew==
   dependencies:
     bezier-easing "^2.1.0"
 
-"@douyinfe/semi-foundation@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-foundation/-/semi-foundation-2.71.1.tgz"
-  integrity sha512-GlV2N/YxSLJC4Gouo8bQ0ki0yDUSjpj390/z9SPS/V8lEDhFRq+q3PchrjD8MzMJNbhSmehztqwqfmzyXHV+Ig==
+"@douyinfe/semi-foundation@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-foundation/-/semi-foundation-2.74.0.tgz"
+  integrity sha512-i5iChgEkEYDp9pwhYibi2Jc05hEmbIowY4JwqXBrCXtnZnEkSUBedl+SHOwHNbqbNNFaXhUzc+KF/YJLGCmL0w==
   dependencies:
-    "@douyinfe/semi-animation" "2.71.1"
-    "@douyinfe/semi-json-viewer-core" "2.71.1"
+    "@douyinfe/semi-animation" "2.74.0"
+    "@douyinfe/semi-json-viewer-core" "2.74.0"
     "@mdx-js/mdx" "^3.0.1"
     async-validator "^3.5.0"
     classnames "^2.2.6"
@@ -145,44 +145,44 @@
     remark-gfm "^4.0.0"
     scroll-into-view-if-needed "^2.2.24"
 
-"@douyinfe/semi-icons@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-icons/-/semi-icons-2.71.1.tgz"
-  integrity sha512-a9eI2Qn7rI3nATFNMc5tfTIMUxVqIDQO/9Wu9BWEeTkOQN2F2aS9UjjRD1j32z+G3/sUpDgaFq+1pOsTZgbkEQ==
+"@douyinfe/semi-icons@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-icons/-/semi-icons-2.74.0.tgz"
+  integrity sha512-yL23zNYgFbg7Fch2eRrKbibhf/+KWpvFN39g40XwIu43VFxs77ilCi3118X5RfVmmZndT/vncVkjQmYcUYvmwA==
   dependencies:
     classnames "^2.2.6"
 
-"@douyinfe/semi-illustrations@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-illustrations/-/semi-illustrations-2.71.1.tgz"
-  integrity sha512-Ad5A8675G7+u4ll6E2Jcd3nRNvSz8Md3q1zK6vEOPmDdWhLTV8d0Gh5avMHVs7/McqEeXEs/C9QTn3H4/GRP+Q==
+"@douyinfe/semi-illustrations@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-illustrations/-/semi-illustrations-2.74.0.tgz"
+  integrity sha512-zr+F1gEX2YFcbZO+NgXVVplID7AYXRUwUimLCSqvZXCDZq+T3XMNQ5Z+NaZ/LXiKH836szGX2wB+XfRR+tsJPw==
 
-"@douyinfe/semi-json-viewer-core@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-json-viewer-core/-/semi-json-viewer-core-2.71.1.tgz"
-  integrity sha512-w7UA5JzfOCryRNz8JpTWu6He6fNy/65m8NML8W5wM56k+k5lAsnEFZD2GYURcSziYFDeyx1iR0z7tcaxFEjvyA==
+"@douyinfe/semi-json-viewer-core@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-json-viewer-core/-/semi-json-viewer-core-2.74.0.tgz"
+  integrity sha512-g8n3NNXQili/IKakeriFN1RRmTs2N/Av8yByysLE8kHh7JylkzB109UcoK98HnjFztvu2xY1blXsc+rM9WjLWQ==
   dependencies:
     jsonc-parser "^3.3.1"
 
-"@douyinfe/semi-theme-default@2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-theme-default/-/semi-theme-default-2.71.1.tgz"
-  integrity sha512-4a4+8L1Z87ZqmxJ6ozf6QMmTiWNMuU00bl0gDIdf8pI6V8arWs6EVVviPj/8zjBGB6j5CgPYaVKfc4mZ/i+GAA==
+"@douyinfe/semi-theme-default@2.74.0":
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-theme-default/-/semi-theme-default-2.74.0.tgz"
+  integrity sha512-Q5vOIhf2qoUJkUEAAHx72Y21HDrA0IGx7QRhCRXtWrh+5HEFHWmNZQDV07Qtoppuo3CnPaPb9mJZNb5h7jmixQ==
 
 "@douyinfe/semi-ui@^2.71.1":
-  version "2.71.1"
-  resolved "https://registry.npmjs.org/@douyinfe/semi-ui/-/semi-ui-2.71.1.tgz"
-  integrity sha512-TeFnlsp27sOIuQhzNDbn6E8zsH3mJCU0kEkkQI0NBjxxa2LSLF82AmwLBAg7lZ/tkyQNIjF/LdkW6bPbDKnySA==
+  version "2.74.0"
+  resolved "https://registry.npmjs.org/@douyinfe/semi-ui/-/semi-ui-2.74.0.tgz"
+  integrity sha512-TGYnOgztfUvGsrdWDs0DaTuNEYoEMzoFLrvvtqN7eBP9xjiU/VbQN++7Kl9fENwuCHjAQHhQBjWKGxBNHUTD2w==
   dependencies:
     "@dnd-kit/core" "^6.0.8"
     "@dnd-kit/sortable" "^7.0.2"
     "@dnd-kit/utilities" "^3.2.1"
-    "@douyinfe/semi-animation" "2.71.1"
-    "@douyinfe/semi-animation-react" "2.71.1"
-    "@douyinfe/semi-foundation" "2.71.1"
-    "@douyinfe/semi-icons" "2.71.1"
-    "@douyinfe/semi-illustrations" "2.71.1"
-    "@douyinfe/semi-theme-default" "2.71.1"
+    "@douyinfe/semi-animation" "2.74.0"
+    "@douyinfe/semi-animation-react" "2.74.0"
+    "@douyinfe/semi-foundation" "2.74.0"
+    "@douyinfe/semi-icons" "2.74.0"
+    "@douyinfe/semi-illustrations" "2.74.0"
+    "@douyinfe/semi-theme-default" "2.74.0"
     async-validator "^3.5.0"
     classnames "^2.2.6"
     copy-text-to-clipboard "^2.1.1"
@@ -533,9 +533,9 @@
   integrity sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==
 
 "@types/ms@*":
-  version "0.7.34"
-  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz"
-  integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz"
+  integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
 "@types/node-telegram-bot-api@^0.64.7":
   version "0.64.7"
@@ -2252,9 +2252,9 @@ hasown@^2.0.0, hasown@^2.0.2:
     function-bind "^1.1.2"
 
 hast-util-to-estree@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/hast-util-to-estree/-/hast-util-to-estree-3.1.0.tgz"
-  integrity sha512-lfX5g6hqVh9kjS/B9E2gSkvHH4SZNiQFiqWS0x9fENzEl+8W12RqdRxX6d/Cwxi30tPQs3bIO+aolQJNp1bIyw==
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/hast-util-to-estree/-/hast-util-to-estree-3.1.1.tgz"
+  integrity sha512-IWtwwmPskfSmma9RpzCappDUitC8t5jhAynHhc1m2+5trOgsrp7txscUSavc5Ic8PATyAjfrCK1wgtxh2cICVQ==
   dependencies:
     "@types/estree" "^1.0.0"
     "@types/estree-jsx" "^1.0.0"
@@ -2269,7 +2269,7 @@ hast-util-to-estree@^3.0.0:
     mdast-util-mdxjs-esm "^2.0.0"
     property-information "^6.0.0"
     space-separated-tokens "^2.0.0"
-    style-to-object "^0.4.0"
+    style-to-object "^1.0.0"
     unist-util-position "^5.0.0"
     zwitch "^2.0.0"
 
@@ -2354,11 +2354,6 @@ inherits@~2.0.3, inherits@2:
   version "2.0.4"
   resolved "https://registry.npmmirror.com/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
-
-inline-style-parser@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/inline-style-parser/-/inline-style-parser-0.1.1.tgz"
-  integrity sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==
 
 inline-style-parser@0.2.4:
   version "0.2.4"
@@ -2856,9 +2851,9 @@ math-intrinsics@^1.1.0:
   integrity sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==
 
 mdast-util-find-and-replace@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/mdast-util-find-and-replace/-/mdast-util-find-and-replace-3.0.1.tgz"
-  integrity sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/mdast-util-find-and-replace/-/mdast-util-find-and-replace-3.0.2.tgz"
+  integrity sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==
   dependencies:
     "@types/mdast" "^4.0.0"
     escape-string-regexp "^5.0.0"
@@ -2961,9 +2956,9 @@ mdast-util-mdx-expression@^2.0.0:
     mdast-util-to-markdown "^2.0.0"
 
 mdast-util-mdx-jsx@^3.0.0:
-  version "3.1.3"
-  resolved "https://registry.npmjs.org/mdast-util-mdx-jsx/-/mdast-util-mdx-jsx-3.1.3.tgz"
-  integrity sha512-bfOjvNt+1AcbPLTFMFWY149nJz0OjmewJs3LQQ5pIyVGxP4CdOqNVJL6kTaM5c68p8q82Xv3nCyFfUnuEcH3UQ==
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/mdast-util-mdx-jsx/-/mdast-util-mdx-jsx-3.2.0.tgz"
+  integrity sha512-lj/z8v0r6ZtsN/cGNNtemmmfoLAFZnjMbNyLzBafjzikOM+glrjNHPlf6lQDOTccj9n5b0PPihEBbhneMyGs1Q==
   dependencies:
     "@types/estree-jsx" "^1.0.0"
     "@types/hast" "^3.0.0"
@@ -3120,9 +3115,9 @@ micromark-extension-gfm-strikethrough@^2.0.0:
     micromark-util-types "^2.0.0"
 
 micromark-extension-gfm-table@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/micromark-extension-gfm-table/-/micromark-extension-gfm-table-2.1.0.tgz"
-  integrity sha512-Ub2ncQv+fwD70/l4ou27b4YzfNaCJOvyX4HxXU15m7mpYY+rjuWzsLIPZHJL253Z643RpbcP1oeIJlQ/SKW67g==
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/micromark-extension-gfm-table/-/micromark-extension-gfm-table-2.1.1.tgz"
+  integrity sha512-t2OU/dXXioARrC6yWfJ4hqB7rct14e8f7m0cbI5hUmDyyIlwv5vEtooptH8INkbLzOatzKuVbQmAYcbWoyz6Dg==
   dependencies:
     devlop "^1.0.0"
     micromark-factory-space "^2.0.0"
@@ -3388,9 +3383,9 @@ micromark-util-sanitize-uri@^2.0.0:
     micromark-util-symbol "^2.0.0"
 
 micromark-util-subtokenize@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/micromark-util-subtokenize/-/micromark-util-subtokenize-2.0.3.tgz"
-  integrity sha512-VXJJuNxYWSoYL6AJ6OQECCFGhIU2GGHMw8tahogePBrjkG8aCCas3ibkp7RnVOSTClg2is05/R7maAhF1XyQMg==
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/micromark-util-subtokenize/-/micromark-util-subtokenize-2.0.4.tgz"
+  integrity sha512-N6hXjrin2GTJDe3MVjf5FuXpm12PGm80BrUAeub9XFXca8JZbP+oIwY4LJSVwFUCL1IPm/WwSVUN7goFHmSGGQ==
   dependencies:
     devlop "^1.0.0"
     micromark-util-chunked "^2.0.0"
@@ -3739,12 +3734,11 @@ parent-module@^1.0.0:
     callsites "^3.0.0"
 
 parse-entities@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/parse-entities/-/parse-entities-4.0.1.tgz"
-  integrity sha512-SWzvYcSJh4d/SGLIOQfZ/CoNv6BTlI6YEQ7Nj82oDVnRpwe/Z/F1EMx42x3JAOwGBlCjeCH0BRJQbQ/opHL17w==
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/parse-entities/-/parse-entities-4.0.2.tgz"
+  integrity sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw==
   dependencies:
     "@types/unist" "^2.0.0"
-    character-entities "^2.0.0"
     character-entities-legacy "^3.0.0"
     character-reference-invalid "^2.0.0"
     decode-named-character-reference "^1.0.0"
@@ -4634,13 +4628,6 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmmirror.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
-
-style-to-object@^0.4.0:
-  version "0.4.4"
-  resolved "https://registry.npmjs.org/style-to-object/-/style-to-object-0.4.4.tgz"
-  integrity sha512-HYNoHZa2GorYNyqiCaBgsxvcJIn7OHq6inEga+E6Ke3m5JkoqpQbnFssk4jwe+K7AhGa2fcha4wSOf1Kn01dMg==
-  dependencies:
-    inline-style-parser "0.1.1"
 
 style-to-object@^1.0.0:
   version "1.0.8"

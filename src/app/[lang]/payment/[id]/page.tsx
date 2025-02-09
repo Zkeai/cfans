@@ -63,7 +63,7 @@ export default function PaymentPage() {
       chain: "Binance Smart Chain",
     },
   };
-  const handleCurrencyChange = (value: string) => {
+  const handleCurrencyChange = (value: any) => {
     setSelectedCurrency(value);
   };
 
