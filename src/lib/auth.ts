@@ -3,12 +3,11 @@ import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import Twitter from "next-auth/providers/twitter";
 import Credentials from "next-auth/providers/credentials";
-import connectDB from "./db";
-import { User } from "@/models/User";
 import { compare } from "bcryptjs";
 import { JWT } from "next-auth/jwt";
 import { signInSchema } from "./zod";
 import { ZodError } from "zod";
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -34,10 +33,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("Please provide both email & password(请提供电子邮件和密码)");
           }
 
-          await connectDB();
+
 
           // Check if user exists
-          const user = await User.findOne({ email }).select("+password +role");
+          const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/loginWithCre`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email
+            }),
+          })
+          const data = await res.json();
+          const user = data.message
+          if (!data.success) {
+            throw new Error("User does not exist(用户不存在)");
+          }
 
           if (!user) {
             throw new Error("User does not exist(用户不存在)");
@@ -107,24 +117,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: async ({ user, account }) => {
 
       if (account?.provider === "google" || account?.provider === "github" || account?.provider === "twitter") {
+
         try {
+
           let { email } = user;
           const { name, image } = user
           const { providerAccountId } = account
           if (email === undefined) {
             email = `${name}@cfans.com`
           }
-          await connectDB();
-          const alreadyUser = await User.findOne({ authProviderId: account.providerAccountId });
+          const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/loginWithAuth`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              name,
+              image,
+              authProviderId: providerAccountId,
+            }),
+          })
+          const data = await res.json();
 
-          if (!alreadyUser) {
-            // If the user doesn't exist, create a new one
-            await User.create({ email, name, image, authProviderId: providerAccountId, balance: 0 });
-            return true;
-          } else {
-            // If the user exists, just return true
-            return true;
-          }
+
+          return data.success
+
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           throw new Error("Error while creating user with Google");

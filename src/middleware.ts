@@ -20,7 +20,7 @@ function getLocale(request: NextRequest): string {
       return language;
     }
   }
-  
+
   // 未匹配上，返回默认语言
   return i18n.defaultLocale;
 }

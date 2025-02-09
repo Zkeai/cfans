@@ -3,3 +3,10 @@ export interface IBalance {
     userId: string,
     balance: number
 }
+
+export interface IAuthUser {
+    email: string,
+    name: string,
+    image: string,
+    authProviderId: string
+}
