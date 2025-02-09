@@ -10,6 +10,8 @@ import { ZodError } from "zod";
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true, // 允许自定义域名
+  secret: process.env.NEXTAUTH_SECRET, // 确保有 SECRET
   providers: [
     Google,
     GitHub,
@@ -88,6 +90,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/login",
   },
+
 
   callbacks: {
 
